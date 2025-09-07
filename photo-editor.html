@@ -114,48 +114,51 @@
     }
 
     /* ===== Visual frame (outer colored frame) ===== */
-    .frame-outer{
-      position:relative;
-      padding:var(--frame-thickness);
-      border-radius:10px;
-      box-shadow:0 4px 16px rgba(0,0,0,.18);
-      margin:0 auto 12px;
-      transition:background .2s ease, padding .2s ease, width .2s ease, height .2s ease;
-      width:200px; /* default before first size choice is applied */
-      height:200px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+    .frame-outer {
+      position: relative;
+      padding: var(--frame-thickness);
+      border-radius: 0px; /* sharp edges for realistic wooden frame */
+      background: #c79767; /* base color before applying oak/black/white */
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.15),
+        0 4px 12px rgba(0,0,0,0.2); /* realistic layered depth */
+      margin: 0 auto 12px;
+      transition: background 0.2s ease, padding 0.2s ease, width 0.2s ease, height 0.2s ease;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* Oak wood look */
-    .frame-oak{
+    .frame-oak {
       background:
         repeating-linear-gradient(90deg,
           #b98958 0 6px, #c79767 6px 12px, #b37e4f 12px 18px, #c08f5d 18px 24px);
-      filter:saturate(0.9) brightness(0.98);
+      filter: saturate(0.9) brightness(0.98);
     }
-    .frame-white{ background:#f8f8f8; }
-    .frame-black{ background:#111; }
+    .frame-white { background: #f8f8f8; }
+    .frame-black { background: #111; }
 
     /* ===== Inner white mat (user controlled) ===== */
-    .mat{
-      background:#fff;
-      width:100%;
-      height:100%;
-      padding:10px;
-      border-radius:6px;
-      transition:padding .15s ease;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+    .mat {
+      background: #fff;
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      border-radius: 0px; /* sharp inner edge */
+      transition: padding 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .mat img{
       display:block;
       max-width:100%;
       max-height:100%;
-      border-radius:4px;
+      border-radius:0px; /* image stays sharp as well */
       transition:filter .3s ease, transform .3s ease;
     }
 
