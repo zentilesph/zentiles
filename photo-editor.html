@@ -13,7 +13,7 @@
       --white:#fff;
       --bg:#fdf9f3;
       --gap: 16px;
-      --frame-thickness: 16px;
+      --frame-thickness: 16px; /* outer colored frame thickness */
     }
     *{box-sizing:border-box}
     body{
@@ -113,46 +113,52 @@
       box-shadow:0 8px 20px rgba(0,0,0,.15);
     }
 
-    /* ===== Visual frame ===== */
-    .frame-outer{
-      position:relative;
-      padding:var(--frame-thickness);
-      /* Square corners instead of rounded */
-      border-radius:0;
-      box-shadow:0 4px 16px rgba(0,0,0,.18);
-      margin:0 auto 12px;
-      transition:background .2s ease, padding .2s ease, width .2s ease, height .2s ease;
-      width:200px;
-      height:200px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+    /* ===== Visual frame (outer colored frame) ===== */
+    .frame-outer {
+      position: relative;
+      padding: var(--frame-thickness);
+      border-radius: 0px; /* sharp edges for realistic wooden frame */
+      background: #c79767; /* base color before applying oak/black/white */
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.15),
+        0 4px 12px rgba(0,0,0,0.2); /* realistic layered depth */
+      margin: 0 auto 12px;
+      transition: background 0.2s ease, padding 0.2s ease, width 0.2s ease, height 0.2s ease;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .frame-oak{
-      background: repeating-linear-gradient(90deg,
-        #b98958 0 6px, #c79767 6px 12px, #b37e4f 12px 18px, #c08f5d 18px 24px);
-      filter:saturate(0.9) brightness(0.98);
-    }
-    .frame-white{ background:#f8f8f8; }
-    .frame-black{ background:#111; }
 
-    /* ===== Inner mat ===== */
-    .mat{
-      background:#fff;
-      width:100%;
-      height:100%;
-      padding:10px;
-      border-radius:0;
-      transition:padding .15s ease;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+    /* Oak wood look */
+    .frame-oak {
+      background:
+        repeating-linear-gradient(90deg,
+          #b98958 0 6px, #c79767 6px 12px, #b37e4f 12px 18px, #c08f5d 18px 24px);
+      filter: saturate(0.9) brightness(0.98);
+    }
+    .frame-white { background: #f8f8f8; }
+    .frame-black { background: #111; }
+
+    /* ===== Inner white mat (user controlled) ===== */
+    .mat {
+      background: #fff;
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      border-radius: 0px; /* sharp inner edge */
+      transition: padding 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .mat img{
       display:block;
       max-width:100%;
       max-height:100%;
+      border-radius:0px; /* image stays sharp as well */
       transition:filter .3s ease, transform .3s ease;
     }
 
@@ -181,7 +187,7 @@
     }
     .frame-thumb{
       width:44px; height:44px;
-      border-radius:4px;
+      border-radius:8px;
       cursor:pointer;
       border:2px solid transparent;
       box-shadow:inset 0 2px 6px rgba(0,0,0,.25), 0 2px 6px rgba(0,0,0,.08);
@@ -190,8 +196,9 @@
     .frame-thumb:hover{ transform:scale(1.1); }
     .frame-thumb.selected{ border-color:var(--oak); }
     .thumb-oak{
-      background: repeating-linear-gradient(90deg,
-        #b98958 0 6px, #c79767 6px 12px, #b37e4f 12px 18px, #c08f5d 18px 24px);
+      background:
+        repeating-linear-gradient(90deg,
+          #b98958 0 6px, #c79767 6px 12px, #b37e4f 12px 18px, #c08f5d 18px 24px);
     }
     .thumb-white{ background:#f8f8f8; }
     .thumb-black{ background:#111; }
@@ -254,96 +261,84 @@
       width: 360px;
       height: 100%;
       background: #fff;
-      box-shadow: -2px 0 8px rgba(0,0,0,0.15);
-      transition: right 0.4s ease;
-      z-index: 2000;
+      box-shadow: -4px 0 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: right 0.3s ease;
+      z-index: 1100;
       display: flex;
       flex-direction: column;
     }
-    .checkout-sidebar.active {
-      right: 0;
-    }
+    .checkout-sidebar.active { right: 0; }
+
     .checkout-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem;
-      background: var(--oak);
-      color: #fff;
-    }
-    .checkout-header h2 {
-      margin: 0;
       font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--oak);
+      margin-bottom: 20px;
     }
     .checkout-header button {
       background: none;
       border: none;
-      color: #fff;
       font-size: 1.4rem;
       cursor: pointer;
+      color: var(--black);
     }
+
     .checkout-body {
-      padding: 1rem;
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
       overflow-y: auto;
     }
-    .checkout-section {
-      margin-bottom: 1rem;
-    }
-    .checkout-section button {
+
+    .checkout-actions button {
       width: 100%;
-      padding: 0.7rem;
-      margin-bottom: 0.5rem;
+      padding: 10px;
       background: var(--oak);
       color: #fff;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       font-size: 1rem;
-      transition: background 0.3s ease;
     }
-    .checkout-section button:hover {
-      background: var(--black);
+    .checkout-summary {
+      font-size: 0.95rem;
     }
-    .summary {
-      background: #fdf9f3;
-      padding: 1rem;
-      border-radius: 6px;
-    }
-    .summary p {
+    .checkout-summary div {
       display: flex;
       justify-content: space-between;
-      margin: 6px 0;
-    }
-    .checkout-footer {
-      padding: 1rem;
-      border-top: 1px solid #ddd;
+      margin-bottom: 8px;
     }
     .checkout-footer button {
       width: 100%;
-      padding: 0.9rem;
-      font-size: 1.1rem;
-      background: var(--oak);
+      padding: 12px;
+      background: #000;
       color: #fff;
       border: none;
-      border-radius: 6px;
+      font-size: 1rem;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .checkout-footer button:hover {
-      background: var(--black);
     }
   </style>
 </head>
 <body>
   <!-- Top Navigation -->
   <div class="top-nav">
+    <!-- Home button -->
     <div class="nav-left">
       <button onclick="window.location.href='index.html'" title="Home">
         <i class="fas fa-home"></i>
       </button>
     </div>
+
+    <!-- Business name -->
     <div class="logo">zentiles</div>
+
+    <!-- Cart icon -->
     <div class="nav-right">
       <button id="cartBtn" class="icon-btn" title="Cart">
         <i class="fas fa-shopping-cart"></i>
@@ -363,24 +358,24 @@
   </button>
   <input id="fileInput" type="file" accept="image/*" />
 
-  <!-- Checkout Sidebar -->
-  <div class="checkout-sidebar" id="checkoutSidebar">
+  <!-- ===== Checkout Sidebar ===== -->
+  <div id="checkoutSidebar" class="checkout-sidebar">
     <div class="checkout-header">
-      <h2>Checkout</h2>
+      <span>Checkout</span>
       <button id="closeSidebar"><i class="fas fa-times"></i></button>
     </div>
     <div class="checkout-body">
-      <div class="checkout-section">
+      <div class="checkout-actions">
         <button>Add Address</button>
         <button>Add Payment Method</button>
       </div>
-      <div class="summary">
-        <p><span>Tiles:</span> <span id="tileCount">0</span></p>
-        <p><span>Subtotal:</span> <span id="subtotal">₱0</span></p>
-        <p><span>Discount (WELCOME 25%):</span> <span id="discount">-₱0</span></p>
-        <p><span>Shipping:</span> <span id="shipping">₱0</span></p>
+      <div class="checkout-summary">
+        <div><span>Tiles:</span><span id="tileCount">0</span></div>
+        <div><span>Subtotal:</span><span id="subtotal">₱0</span></div>
+        <div><span>Discount (WELCOME 25%):</span><span id="discount">₱0</span></div>
+        <div><span>Shipping:</span><span id="shipping">₱0</span></div>
         <hr>
-        <p><strong>Total:</strong> <strong id="total">₱0</strong></p>
+        <div><strong>Total:</strong><strong id="total">₱0</strong></div>
       </div>
     </div>
     <div class="checkout-footer">
@@ -391,29 +386,20 @@
   <script>
     const MAX_PHOTOS = 7;
     const TILE_PRICE = 1000;
-    const SHIPPING_FEE = 200;
-    const FREE_SHIPPING_THRESHOLD = 2000;
     const DISCOUNT_RATE = 0.25;
+    const FREE_SHIPPING_THRESHOLD = 2000;
+    const SHIPPING_FEE = 100;
 
-    const gallery = document.getElementById('gallery');
-    const addBtn = document.getElementById('addBtn');
-    const fileInput = document.getElementById('fileInput');
-
-    const cartBtn = document.getElementById('cartBtn');
-    const checkoutSidebar = document.getElementById('checkoutSidebar');
-    const closeSidebar = document.getElementById('closeSidebar');
-
-    /* ===== SIZE MAP ===== */
     const SIZE_MAP = {
-      "8x8": { w: 160, h: 160, label:'8″ × 8″' },
-      "8x11": { w: 160, h: 220, label:'8″ × 11″' },
-      "11x8": { w: 220, h: 160, label:'11″ × 8″' },
-      "12x12": { w: 200, h: 200, label:'12″ × 12″' },
-      "12x16": { w: 200, h: 266, label:'12″ × 16″' },
-      "16x12": { w: 266, h: 200, label:'16″ × 12″' },
-      "20x20": { w: 300, h: 300, label:'20″ × 20″' },
-      "20x27": { w: 300, h: 405, label:'20″ × 27″' },
-      "27x20": { w: 405, h: 300, label:'27″ × 20″' },
+      "8x8":     { w: 160, h: 160, label:'8″ × 8″' },
+      "8x11":    { w: 160, h: 220, label:'8″ × 11″' },
+      "11x8":    { w: 220, h: 160, label:'11″ × 8″' },
+      "12x12":   { w: 200, h: 200, label:'12″ × 12″' },
+      "12x16":   { w: 200, h: 266, label:'12″ × 16″' },
+      "16x12":   { w: 266, h: 200, label:'16″ × 12″' },
+      "20x20":   { w: 300, h: 300, label:'20″ × 20″' },
+      "20x27":   { w: 300, h: 405, label:'20″ × 27″' },
+      "27x20":   { w: 405, h: 300, label:'27″ × 20″' },
     };
 
     const EFFECTS = [
@@ -423,6 +409,13 @@
       { name: "Vivid", value: "contrast(1.25) saturate(1.25)" },
       { name: "Warm", value: "brightness(1.08) hue-rotate(18deg) saturate(1.1)" },
     ];
+
+    const gallery = document.getElementById('gallery');
+    const addBtn = document.getElementById('addBtn');
+    const fileInput = document.getElementById('fileInput');
+    const cartBtn = document.getElementById('cartBtn');
+    const checkoutSidebar = document.getElementById('checkoutSidebar');
+    const closeSidebar = document.getElementById('closeSidebar');
 
     /* ====== ADD PHOTO FLOW ====== */
     addBtn.addEventListener('click', () => {
@@ -464,16 +457,16 @@
         <div class="controls">
           <div class="label">Frame</div>
           <div class="frames">
-            <button class="frame-thumb thumb-oak selected" data-frame="oak"></button>
-            <button class="frame-thumb thumb-white" data-frame="white"></button>
-            <button class="frame-thumb thumb-black" data-frame="black"></button>
+            <button class="frame-thumb thumb-oak selected" data-frame="oak" title="Oak Wood"></button>
+            <button class="frame-thumb thumb-white" data-frame="white" title="White"></button>
+            <button class="frame-thumb thumb-black" data-frame="black" title="Classic Black"></button>
           </div>
 
           <div class="label">Size</div>
           <select class="size">
-            ${Object.entries(SIZE_MAP).map(([k,v]) =>
-              `<option value="${k}" ${k===defaultKey?'selected':''}>${v.label}</option>`
-            ).join('')}
+            ${Object.entries(SIZE_MAP).map(([k,v]) => `
+              <option value="${k}" ${k===defaultKey?'selected':''}>${v.label}</option>
+            `).join('')}
           </select>
 
           <div class="label">Effect</div>
@@ -484,4 +477,24 @@
           <div class="label">Border (white)</div>
           <input class="border" type="range" min="0" max="50" value="10" />
         </div>
-        <div class="hint
+        <div class="hint">oak wood • white • classic black</div>
+      `;
+
+      gallery.appendChild(tile);
+
+      const frameOuter = tile.querySelector('.frame-outer');
+      const mat = tile.querySelector('.mat');
+      const img = tile.querySelector('img');
+
+      // frame selection
+      tile.querySelectorAll('.frame-thumb').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          tile.querySelectorAll('.frame-thumb').forEach(b=>b.classList.remove('selected'));
+          btn.classList.add('selected');
+          applyFrame(frameOuter, btn.dataset.frame);
+          fitGallery();
+        });
+      });
+
+      // size select
+      tile.query
