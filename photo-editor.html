@@ -4,10 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>zentiles – create your art</title>
+  <!-- Google Font: Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* === Global Styles === */
+    /* === Global Styles (Copied from index.html) === */
     :root {
       --oak: #ce9f6f;
       --black: #000000;
@@ -25,7 +27,7 @@
       text-decoration: none;
       color: inherit;
     }
-    /* === Header & Navigation === */
+    /* === Header & Navigation (Copied from index.html) === */
     header {
       position: fixed;
       top: 0;
@@ -108,8 +110,6 @@
       padding: 1rem;
       border-radius: 8px;
       border: 1px solid var(--oak);
-      flex-grow: 1; /* Allow control groups to grow */
-      min-width: 150px; /* Ensure they don't get too small */
     }
     .control-group label {
       display: block;
@@ -147,7 +147,6 @@
       justify-content: center;
       gap: 1rem;
       padding: 1rem;
-      -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
     }
     .tile {
       position: relative;
@@ -169,7 +168,6 @@
       transition: right 0.3s ease;
       z-index: 1200;
       padding: 2rem;
-      overflow-y: auto;
     }
     .checkout-sidebar.active {
       right: 0;
@@ -223,7 +221,7 @@
     .place-order-btn:hover {
       background: var(--black);
     }
-    /* === Footer === */
+    /* === Footer (Copied from index.html) === */
     footer {
       text-align: center;
       padding: 1rem;
@@ -231,55 +229,10 @@
       color: var(--black);
       border-top: 1px solid #ddd;
     }
-    /* === Mobile Styles === */
-    @media (max-width: 768px) {
-      body {
-        font-size: 0.9rem;
-      }
-      header {
-        padding: 0.8rem 1rem;
-      }
-      .logo {
-        font-size: 1.5rem;
-      }
-      .email-icon, .cart-icon {
-        font-size: 1.2rem;
-      }
-      .hamburger {
-        font-size: 1.5rem;
-      }
-      .editor-section {
-        padding: 5rem 1rem 2rem;
-      }
-      .editor-section h1 {
-        font-size: 1.5rem;
-      }
-      .editor-controls {
-        flex-direction: column;
-        gap: 0.8rem;
-      }
-      .control-group {
-        width: 100%;
-        min-width: auto;
-      }
-      .checkout-sidebar {
-        width: 100%;
-        right: -100%;
-        padding: 1rem;
-      }
-      .checkout-sidebar.active {
-        right: 0;
-      }
-      .place-order-btn {
-        font-size: 1rem;
-      }
-      .canvas-container {
-        justify-content: flex-start; /* Align to the start for a better scroll experience */
-      }
-    }
   </style>
 </head>
 <body>
+  <!-- === Header === -->
   <header>
     <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
     <div class="logo">zentiles</div>
@@ -288,12 +241,14 @@
       <a href="#" class="cart-icon" id="cartIcon"><i class="fas fa-shopping-cart"></i></a>
     </div>
   </header>
+  <!-- === Navigation Menu === -->
   <nav class="nav-menu" id="navMenu">
     <a href="photo-editor.html">Create Art</a>
     <a href="index.html#gallery">Gallery Walls</a>
     <a href="index.html#contact">Contact Us</a>
     <a href="index.html#about">About</a>
   </nav>
+  <!-- === Editor Section === -->
   <section class="editor-section">
     <h1>create your gallery wall</h1>
     <div class="editor-controls">
@@ -338,6 +293,7 @@
     </label>
     <div class="canvas-container" id="canvasContainer"></div>
   </section>
+  <!-- === Checkout Sidebar === -->
   <div class="checkout-sidebar" id="checkoutSidebar">
     <h2>checkout</h2>
     <span class="close-btn" id="closeCheckout"><i class="fas fa-times"></i></span>
@@ -352,9 +308,11 @@
     </div>
     <a href="#" class="place-order-btn">Place Order</a>
   </div>
+  <!-- === Footer === -->
   <footer>
     <p>© 2025 zentiles. all rights reserved.</p>
   </footer>
+  <!-- === JavaScript === -->
   <script>
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');
@@ -453,10 +411,8 @@
       const size = document.getElementById('size').value;
       const effect = document.getElementById('effect').value;
       const border = document.getElementById('border').value;
-      if (tiles.length > 0) {
-        tiles[tiles.length - 1] = { ...tiles[tiles.length - 1], frame, size, effect, border: parseInt(border) };
-        renderTiles();
-      }
+      tiles[tiles.length - 1] = { ...tiles[tiles.length - 1], frame, size, effect, border: parseInt(border) };
+      renderTiles();
       updateCheckout();
     }
 
