@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zentiles | Create Memories</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>zentiles – just stick and snap!</title>
+  
+  <!-- Google Font: Poppins for minimalist lowercase logo -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Font Awesome for social icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
   <style>
-    /* === General Reset === */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    /* === Global Styles === */
+    :root {
+      --oak: #ce9f6f; /* Oak wood tone */
+      --black: #000000;
+      --white: #ffffff;
     }
 
     body {
-      background-color: #fdf9f3;
-      color: #000;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
     }
 
     a {
@@ -31,63 +36,71 @@
     header {
       position: fixed;
       top: 0;
+      left: 0;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
+      background: var(--white);
       z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Logo Styling */
+    .logo {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--oak);
+      text-transform: lowercase;
+      letter-spacing: 2px;
+    }
+
+    /* Email Icon */
+    .email-icon {
+      font-size: 1.4rem;
+      color: var(--black);
+      transition: color 0.3s ease;
+    }
+    .email-icon:hover {
+      color: var(--oak);
     }
 
     /* Hamburger Menu */
     .hamburger {
       font-size: 1.8rem;
       cursor: pointer;
-      color: #000;
+      color: var(--black);
     }
 
-    .menu {
+    .nav-menu {
       position: fixed;
       top: 0;
-      left: -250px;
-      height: 100%;
+      left: -100%;
       width: 250px;
-      background: rgba(0, 0, 0, 0.9);
-      color: #fff;
-      padding: 2rem;
+      height: 100%;
+      background: var(--white);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
       transition: left 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+      padding-top: 4rem;
+      z-index: 1100;
     }
 
-    .menu.open {
+    .nav-menu.active {
       left: 0;
     }
 
-    .menu a {
-      font-size: 1.2rem;
-      color: #c79c68;
+    .nav-menu a {
+      display: block;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      color: var(--black);
+      border-bottom: 1px solid #f0f0f0;
     }
 
-    /* Email Icon */
-    .email-icon {
-      font-size: 1.5rem;
-      color: #000;
-    }
-
-    /* Business Name Floating */
-    .brand-name {
-      position: absolute;
-      top: 1rem;
-      right: 2rem;
-      font-size: 1.8rem;
-      text-transform: lowercase;
-      font-weight: 700;
-      color: #000;
-      background: rgba(255, 255, 255, 0.6);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
+    .nav-menu a:hover {
+      background: var(--oak);
+      color: var(--white);
     }
 
     /* === Hero Section === */
@@ -108,284 +121,267 @@
     }
 
     .hero-content {
-      position: absolute;
-      bottom: 20%;
-      left: 50%;
-      transform: translateX(-50%);
+      position: relative;
       text-align: center;
-      color: #fff;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--white);
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 90%;
+      margin: auto;
     }
 
     .hero-content h1 {
-      font-size: 2.8rem;
-      margin-bottom: 0.5rem;
-      text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+      font-size: 3rem;
+      text-transform: lowercase;
+      margin-bottom: 1rem;
     }
 
-    .hero-content p {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+    /* Catchy motto */
+    .hero-content p.motto {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      color: var(--oak);
+      font-weight: 400;
     }
 
     .cta-btn {
-      background: transparent;
-      border: 2px solid #fff;
-      color: #fff;
+      display: inline-block;
+      background: var(--oak);
+      color: var(--white);
       padding: 0.8rem 2rem;
+      border-radius: 6px;
       font-size: 1.2rem;
-      border-radius: 30px;
       transition: background 0.3s ease;
-      cursor: pointer;
     }
 
     .cta-btn:hover {
-      background: #c79c68;
-      color: #000;
+      background: var(--black);
     }
 
-    /* === Split Sections === */
+    /* === Split Video Sections === */
     .split-section {
       display: flex;
-      height: 100vh;
-    }
-
-    .split-video,
-    .split-text {
-      width: 50%;
-      display: flex;
-      justify-content: center;
+      flex-wrap: wrap;
       align-items: center;
-      padding: 2rem;
+      padding: 4rem 2rem;
+      gap: 2rem;
     }
 
-    .split-video video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .split-text {
-      background: #fdf9f3;
-      font-size: 1.5rem;
-      color: #000;
-    }
-
-    /* === FAQ Section === */
-    .faq-section {
-      max-width: 900px;
-      margin: 4rem auto;
-      padding: 2rem;
-      background: #fdf9f3;
-      border-radius: 12px;
-    }
-
-    .faq-section h2 {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 2rem;
-      color: #000;
-    }
-
-    .faq-item {
-      border-bottom: 1px solid #c79c68;
-      padding: 1rem 0;
-    }
-
-    .faq-question {
-      background: none;
-      border: none;
-      width: 100%;
-      text-align: left;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #000;
-      cursor: pointer;
-      padding: 0.5rem;
-      position: relative;
-    }
-
-    .faq-question::after {
-      content: '+';
-      position: absolute;
-      right: 0;
-      font-size: 1.5rem;
-      color: #c79c68;
-      transition: transform 0.3s ease;
-    }
-
-    .faq-question.active::after {
-      content: '-';
-      transform: rotate(180deg);
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease;
-      padding-left: 0.5rem;
-    }
-
-    /* === Contact Section === */
-    .contact-section {
-      max-width: 600px;
-      margin: 3rem auto;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid #c79c68;
+    .split-section video {
+      flex: 1;
+      max-width: 500px;
       border-radius: 10px;
     }
 
-    .contact-section h2 {
+    .split-section .text {
+      flex: 1;
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--black);
+    }
+
+    /* Alternate video/text layout */
+    .split-section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    /* === Social Media Section === */
+    .social-section {
       text-align: center;
-      margin-bottom: 1rem;
-      color: #000;
+      padding: 3rem 1rem;
+      background: #fdf9f3;
     }
 
-    form input,
-    form textarea {
+    .social-section h2 {
+      font-size: 2rem;
+      color: var(--oak);
+      margin-bottom: 1rem;
+      text-transform: lowercase;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      font-size: 2rem;
+      margin-top: 1rem;
+    }
+
+    .social-icons a {
+      color: var(--black);
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: var(--oak);
+    }
+
+    .social-icons p {
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+
+    /* === Contact Form === */
+    .contact-section {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .contact-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-transform: lowercase;
+      color: var(--oak);
+    }
+
+    form {
+      max-width: 500px;
+      margin: auto;
+      background: #fdf9f3;
+      padding: 1.5rem;
+      border-radius: 10px;
+      border: 1px solid var(--oak);
+    }
+
+    label {
+      display: block;
+      margin: 0.5rem 0 0.3rem;
+      font-weight: 500;
+      color: var(--black);
+    }
+
+    input, select, textarea {
       width: 100%;
-      padding: 0.8rem;
+      padding: 0.7rem;
       margin-bottom: 1rem;
-      border: 1px solid #c79c68;
-      border-radius: 5px;
-    }
-
-    form button {
-      background: #c79c68;
-      border: none;
-      padding: 0.8rem 2rem;
-      color: #fff;
+      border: 1px solid var(--oak);
+      border-radius: 6px;
       font-size: 1rem;
-      cursor: pointer;
-      border-radius: 30px;
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .split-section {
-        flex-direction: column;
-        height: auto;
-      }
+    button {
+      background: var(--oak);
+      color: var(--white);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
 
-      .split-video,
-      .split-text {
-        width: 100%;
-        height: 50vh;
-      }
+    button:hover {
+      background: var(--black);
+    }
+
+    /* === Footer === */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: var(--white);
+      color: var(--black);
+      border-top: 1px solid #ddd;
     }
   </style>
 </head>
 <body>
-
   <!-- === Header === -->
   <header>
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <div class="brand-name">zentiles</div>
-    <a href="mailto:contact@zentiles.com" class="email-icon">
-      <i class="fa-solid fa-envelope"></i>
-    </a>
+    <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+    <div class="logo">zentiles</div>
+    <a href="mailto:zentiles@gmail.com" class="email-icon"><i class="fas fa-envelope"></i></a>
   </header>
+  <!-- --- End Header --- -->
 
-  <!-- === Hamburger Menu === -->
-  <nav id="menu" class="menu">
-    <a href="#hero">Home</a>
-    <a href="#create-art">Create Art</a>
-    <a href="#faq">FAQs</a>
-    <a href="#contact">Contact</a>
+  <!-- === Hamburger Navigation Menu === -->
+  <nav class="nav-menu" id="navMenu">
+    <a href="photo-editor.html">Create Art</a>
+    <a href="#gallery">Gallery Walls</a>
+    <a href="#contact">Contact Us</a>
+    <a href="#about">About</a>
   </nav>
+  <!-- --- End Navigation Menu --- -->
 
   <!-- === Hero Section === -->
-  <section id="hero" class="hero">
-    <video autoplay muted loop playsinline>
-      <source src="assets/video/demo-apply.mp4" type="video/mp4">
-    </video>
-    <div class="hero-content">
-      <h1>Create Your Art</h1>
-      <p>Turn memories into beautiful tiles</p>
-      <button class="cta-btn" onclick="location.href='photo-editor.html'">Create Art</button>
-    </div>
-  </section>
+<section class="hero">
+  <video src="assets/video/demo-apply.mp4" autoplay muted loop playsinline preload="auto"></video>
+  <div class="hero-content">
+    <h1>create memories with zentiles</h1>
+    <p class="motto">your walls, your unique story</p>
+    <a href="photo-editor.html" class="cta-btn">create art</a>
+  </div>
+</section>
+<!-- --- End Hero Section --- -->
 
-  <!-- === Split Section 1 === -->
-  <section class="split-section">
-    <div class="split-video">
-      <video autoplay muted loop playsinline>
-        <source src="assets/video/hero-bg.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="split-text">
-      <p>Effortless design for your walls.</p>
-    </div>
-  </section>
+  <!-- === Split Section 1 (Hero BG video moved here) === -->
+<section class="split-section">
+  <video src="assets/video/hero-bg.mp4" autoplay muted loop playsinline></video>
+  <div class="text">stick, snap, and style with ease</div>
+</section>
+
 
   <!-- === Split Section 2 === -->
   <section class="split-section">
-    <div class="split-text">
-      <p>Magnetic. Sticky. Simple to display.</p>
-    </div>
-    <div class="split-video">
-      <video autoplay muted loop playsinline>
-        <source src="assets/video/demo-room.mp4" type="video/mp4">
-      </video>
+    <video src="assets/video/demo-room.mp4" autoplay muted loop playsinline></video>
+    <div class="text">magnetic & sticky tiles, effortlessly chic</div>
+  </section>
+  <!-- --- End Split Sections --- -->
+
+  <!-- === Social Media Section === -->
+  <section class="social-section">
+    <h2>follow us</h2>
+    <div class="social-icons">
+      <a href="#" target="_blank"><i class="fab fa-instagram"></i><p>@zentilesph</p></a>
+      <a href="#" target="_blank"><i class="fab fa-facebook"></i><p>@zentilesph</p></a>
+      <a href="#" target="_blank"><i class="fab fa-tiktok"></i><p>@zentilesph</p></a>
+      <a href="#" target="_blank"><i class="fab fa-x-twitter"></i><p>@zentilesph</p></a>
     </div>
   </section>
+  <!-- --- End Social Media Section --- -->
 
-  <!-- === FAQ Section === -->
-  <section id="faq" class="faq-section">
-    <h2>Frequently Asked Questions</h2>
-    <div class="faq-item">
-      <button class="faq-question">How big are the tiles?</button>
-      <div class="faq-answer">
-        <p>Available sizes include 8x8", 12x12", and 16x20". Perfect for any wall space.</p>
-      </div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question">Do you ship internationally?</button>
-      <div class="faq-answer">
-        <p>Currently, Zentiles ships only within the Philippines.</p>
-      </div>
-    </div>
-  </section>
+  <!-- === Contact Form Section === -->
+  <section class="contact-section" id="contact">
+    <h2>contact us</h2>
+    <form action="https://formspree.io/f/meolvqab" method="POST">
+      <label for="name">full name</label>
+      <input id="name" name="name" type="text" placeholder="your full name" required />
 
-  <!-- === Contact Section === -->
-  <section id="contact" class="contact-section">
-    <h2>Contact Us</h2>
-    <form action="https://formspree.io/f/your-form-id" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-      <button type="submit">Send</button>
+      <label for="email">email address</label>
+      <input id="email" name="_replyto" type="email" placeholder="your.email@example.com" required />
+
+      <label for="message">message</label>
+      <textarea id="message" name="message" rows="4" placeholder="how can we help you?"></textarea>
+
+      <button type="submit">send message</button>
     </form>
   </section>
+  <!-- --- End Contact Form Section --- -->
 
+  <!-- === Footer === -->
+  <footer>
+    <p>© 2025 zentiles. all rights reserved.</p>
+  </footer>
+  <!-- --- End Footer --- -->
+
+  <!-- === JavaScript: Hamburger Menu Auto-Close === -->
   <script>
-    // === Toggle Hamburger Menu ===
-    const menu = document.getElementById('menu');
-    function toggleMenu() {
-      menu.classList.toggle('open');
-    }
-    window.addEventListener('click', (e) => {
-      if (!menu.contains(e.target) && !e.target.classList.contains('hamburger')) {
-        menu.classList.remove('open');
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+
+    // Open menu
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        navMenu.classList.remove('active');
       }
     });
-
-    // === FAQ Toggle ===
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    faqQuestions.forEach(q => {
-      q.addEventListener('click', () => {
-        faqQuestions.forEach(item => {
-          if (item !== q) {
-            item.classList.remove('active');
-            item.nextElementSibling.style.maxHeight = null;
-          }
-        });
-        q.classList.toggle('active');
-        const answer = q.nextElementSibling;
-        answer.style.maxHeight = answer.style.maxHeight ? null : answer.scrollHeight + "px";
-      });
-    });
   </script>
+  <!-- --- End JavaScript --- -->
 </body>
 </html>
