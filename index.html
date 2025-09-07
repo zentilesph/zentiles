@@ -6,8 +6,11 @@
   <title>Zentiles | Create Art with Ease</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
   <style>
-    /* ===== RESET ===== */
+    /* 
+    // === GLOBAL STYLES ===
+    */
     * {
       margin: 0;
       padding: 0;
@@ -25,8 +28,12 @@
       text-decoration: none;
       color: inherit;
     }
+    /* --- End GLOBAL STYLES --- */
 
-    /* ===== HEADER ===== */
+    /* 
+    // === HEADER ===
+    // Includes logo, hamburger menu, and email icon
+    */
     header {
       position: fixed;
       top: 0;
@@ -40,13 +47,16 @@
       z-index: 1000;
     }
 
+    /* Logo: bigger size and small caps */
     .logo {
-      font-size: 1.8rem;
+      font-size: 2.4rem; /* increased from 1.8rem */
       font-weight: 700;
+      font-variant: small-caps; /* makes text small caps */
       color: #222;
+      letter-spacing: 2px;
     }
 
-    /* Hamburger menu */
+    /* Hamburger menu button */
     .hamburger {
       display: flex;
       flex-direction: column;
@@ -63,6 +73,7 @@
       transition: 0.3s;
     }
 
+    /* Side menu styles */
     .menu {
       position: fixed;
       top: 0;
@@ -101,8 +112,11 @@
       margin-right: 20px;
       cursor: pointer;
     }
+    /* --- End HEADER --- */
 
-    /* ===== HERO SECTION ===== */
+    /* 
+    // === HERO SECTION ===
+    */
     .hero {
       position: relative;
       width: 100%;
@@ -114,7 +128,7 @@
       text-align: center;
     }
 
-    /* Mobile-friendly video autoplay */
+    /* Background video */
     .hero video {
       position: absolute;
       top: 0;
@@ -128,11 +142,20 @@
     .hero-content {
       color: #fff;
       z-index: 10;
+      max-width: 90%;
     }
 
     .hero-content h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    /* Motto/tagline styling */
+    .hero-content p {
+      font-size: 1.3rem;
+      font-weight: 400;
       margin-bottom: 20px;
+      opacity: 0.9;
     }
 
     .hero-content .cta-btn {
@@ -148,8 +171,11 @@
     .hero-content .cta-btn:hover {
       background: #444;
     }
+    /* --- End HERO SECTION --- */
 
-    /* ===== VIDEO SECTIONS ===== */
+    /* 
+    // === FEATURE VIDEO SECTIONS ===
+    */
     .section {
       display: flex;
       flex-wrap: wrap;
@@ -173,12 +199,14 @@
       text-align: center;
     }
 
-    /* Alternate layouts */
     .reverse {
       flex-direction: row-reverse;
     }
+    /* --- End FEATURE VIDEO SECTIONS --- */
 
-    /* ===== CONTACT FORM ===== */
+    /* 
+    // === CONTACT FORM ===
+    */
     .contact-section {
       padding: 60px 20px;
       text-align: center;
@@ -214,8 +242,11 @@
     form button:hover {
       background: #444;
     }
+    /* --- End CONTACT FORM --- */
 
-    /* ===== FOOTER ===== */
+    /* 
+    // === FOOTER ===
+    */
     footer {
       text-align: center;
       padding: 20px;
@@ -223,8 +254,11 @@
       color: #fff;
       margin-top: 40px;
     }
+    /* --- End FOOTER --- */
 
-    /* ===== RESPONSIVE ===== */
+    /* 
+    // === RESPONSIVE DESIGN ===
+    */
     @media (max-width: 768px) {
       .section {
         flex-direction: column;
@@ -236,13 +270,18 @@
       .hero-content h1 {
         font-size: 2rem;
       }
+      .hero-content p {
+        font-size: 1rem;
+      }
     }
+    /* --- End RESPONSIVE DESIGN --- */
   </style>
 </head>
+
 <body>
-  <!-- HEADER -->
+  <!-- === HEADER === -->
   <header>
-    <div class="logo">Zentiles</div>
+    <div class="logo">zentiles</div>
     <a href="mailto:zentiles@gmail.com" class="email-icon" title="Send us an email">✉️</a>
     <div class="hamburger" id="hamburger">
       <span></span>
@@ -256,8 +295,9 @@
       <a href="#about">About</a>
     </nav>
   </header>
+  <!-- --- End HEADER --- -->
 
-  <!-- HERO SECTION -->
+  <!-- === HERO SECTION === -->
   <section class="hero">
     <video 
       src="assets/video/hero-bg.mp4" 
@@ -269,11 +309,14 @@
     </video>
     <div class="hero-content">
       <h1>Create Memories with Zentiles</h1>
+      <!-- Catchy motto/tagline -->
+      <p>Transform your walls, one tile at a time.</p>
       <a href="photo-editor.html" class="cta-btn">Create Art</a>
     </div>
   </section>
+  <!-- --- End HERO SECTION --- -->
 
-  <!-- SECTION 1: DEMO APPLY -->
+  <!-- === FEATURE SECTION 1 === -->
   <section class="section">
     <video 
       src="assets/video/demo-apply.mp4" 
@@ -287,8 +330,9 @@
       Peel. Stick. Snap.
     </div>
   </section>
+  <!-- --- End FEATURE SECTION 1 --- -->
 
-  <!-- SECTION 2: DEMO ROOM -->
+  <!-- === FEATURE SECTION 2 === -->
   <section class="section reverse">
     <video 
       src="assets/video/demo-room.mp4" 
@@ -302,8 +346,9 @@
       Magnetic. Sticky. Easy.
     </div>
   </section>
+  <!-- --- End FEATURE SECTION 2 --- -->
 
-  <!-- CONTACT FORM -->
+  <!-- === CONTACT SECTION === -->
   <section class="contact-section" id="contact">
     <h2>Contact Us</h2>
     <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
@@ -313,28 +358,31 @@
       <button type="submit">Send Message</button>
     </form>
   </section>
+  <!-- --- End CONTACT SECTION --- -->
 
-  <!-- FOOTER -->
+  <!-- === FOOTER === -->
   <footer>
     &copy; 2025 Zentiles. All rights reserved.
   </footer>
+  <!-- --- End FOOTER --- -->
 
-  <!-- JAVASCRIPT -->
+  <!-- === JAVASCRIPT === -->
   <script>
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
 
-    // Toggle menu
+    // Toggle side menu open/close
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
 
-    // Close menu when clicking outside
+    // Close menu when clicking outside of it
     document.addEventListener('click', (e) => {
       if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
         menu.classList.remove('active');
       }
     });
   </script>
+  <!-- --- End JAVASCRIPT --- -->
 </body>
 </html>
