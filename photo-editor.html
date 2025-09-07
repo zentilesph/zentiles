@@ -9,7 +9,7 @@
   <!-- Font Awesome for icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* === Global Styles (Copied from index.html) === */
+    /* === Global Styles === */
     :root {
       --oak: #ce9f6f;
       --black: #000000;
@@ -27,7 +27,7 @@
       text-decoration: none;
       color: inherit;
     }
-    /* === Header & Navigation (Copied from index.html) === */
+    /* === Header & Navigation === */
     header {
       position: fixed;
       top: 0;
@@ -36,36 +36,39 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
+      padding: 0.8rem 1.5rem;
       background: var(--white);
       z-index: 1000;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     .logo {
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 5vw, 1.8rem);
       font-weight: 600;
       color: var(--oak);
       text-transform: lowercase;
       letter-spacing: 2px;
     }
     .email-icon, .cart-icon {
-      font-size: 1.4rem;
+      font-size: clamp(1.2rem, 4vw, 1.3rem);
       color: var(--black);
       transition: color 0.3s ease;
+      padding: 0.5rem;
     }
     .email-icon:hover, .cart-icon:hover {
       color: var(--oak);
     }
     .hamburger {
-      font-size: 1.8rem;
+      font-size: clamp(1.4rem, 5vw, 1.6rem);
       cursor: pointer;
       color: var(--black);
+      padding: 0.5rem;
     }
     .nav-menu {
       position: fixed;
       top: 0;
       left: -100%;
-      width: 250px;
+      width: 80%;
+      max-width: 250px;
       height: 100%;
       background: var(--white);
       box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -78,8 +81,8 @@
     }
     .nav-menu a {
       display: block;
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
+      padding: 1rem 1.5rem;
+      font-size: clamp(1rem, 3.5vw, 1.1rem);
       color: var(--black);
       border-bottom: 1px solid #f0f0f0;
     }
@@ -89,11 +92,11 @@
     }
     /* === Editor Section === */
     .editor-section {
-      padding: 6rem 2rem 3rem;
+      padding: 5rem 1rem 2rem;
       text-align: center;
     }
     .editor-section h1 {
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 5vw, 1.8rem);
       color: var(--oak);
       text-transform: lowercase;
       margin-bottom: 1rem;
@@ -102,26 +105,30 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
     }
     .control-group {
       background: #fdf9f3;
-      padding: 1rem;
+      padding: 0.8rem;
       border-radius: 8px;
       border: 1px solid var(--oak);
+      flex: 1 1 100%;
+      max-width: 300px;
     }
     .control-group label {
       display: block;
       font-weight: 500;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
+      font-size: clamp(0.9rem, 3vw, 1rem);
     }
     .control-group select, .control-group input[type="range"] {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.6rem;
       border: 1px solid var(--oak);
       border-radius: 6px;
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      touch-action: manipulation;
     }
     .upload-btn {
       background: var(--oak);
@@ -129,9 +136,10 @@
       padding: 0.8rem 1.5rem;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3vw, 1rem);
       margin: 1rem auto;
       display: inline-block;
+      line-height: 1.2;
     }
     .upload-btn:disabled {
       background: #ccc;
@@ -145,89 +153,124 @@
       flex-wrap: nowrap;
       overflow-x: auto;
       justify-content: center;
-      gap: 1rem;
-      padding: 1rem;
+      gap: 0.8rem;
+      padding: 0.8rem;
+      -webkit-overflow-scrolling: touch;
     }
     .tile {
       position: relative;
       display: inline-block;
+      flex-shrink: 0;
     }
     canvas {
       border: 1px solid var(--black);
       border-radius: 6px;
+      max-width: 100%;
     }
     /* === Checkout Sidebar === */
     .checkout-sidebar {
       position: fixed;
       top: 0;
-      right: -400px;
-      width: 400px;
+      right: -100%;
+      width: min(80%, 320px);
       height: 100%;
       background: var(--white);
       box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
       transition: right 0.3s ease;
       z-index: 1200;
-      padding: 2rem;
+      padding: 1.5rem;
     }
     .checkout-sidebar.active {
       right: 0;
     }
     .checkout-sidebar h2 {
-      font-size: 1.8rem;
+      font-size: clamp(1.4rem, 4.5vw, 1.6rem);
       color: var(--oak);
       text-transform: lowercase;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
     }
     .close-btn {
       position: absolute;
       top: 1rem;
       right: 1rem;
-      font-size: 1.4rem;
+      font-size: clamp(1.2rem, 4vw, 1.3rem);
       cursor: pointer;
       color: var(--black);
+      padding: 0.5rem;
     }
     .checkout-btn {
       background: var(--oak);
       color: var(--white);
-      padding: 0.8rem;
+      padding: 0.7rem;
       border-radius: 6px;
-      margin: 0.5rem 0;
+      margin: 0.4rem 0;
       text-align: center;
       display: block;
+      font-size: clamp(0.9rem, 3vw, 1rem);
     }
     .checkout-btn:hover {
       background: var(--black);
     }
     .order-summary {
-      margin-top: 1rem;
-      padding: 1rem;
+      margin-top: 0.8rem;
+      padding: 0.8rem;
       background: #fdf9f3;
       border-radius: 8px;
       border: 1px solid var(--oak);
     }
     .order-summary p {
-      margin: 0.5rem 0;
+      margin: 0.4rem 0;
+      font-size: clamp(0.85rem, 2.8vw, 0.95rem);
     }
     .place-order-btn {
       background: var(--oak);
       color: var(--white);
-      padding: 1rem;
+      padding: 0.9rem;
       border-radius: 6px;
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 3.5vw, 1.1rem);
       text-align: center;
       display: block;
-      margin-top: 1rem;
+      margin-top: 0.8rem;
     }
     .place-order-btn:hover {
       background: var(--black);
     }
-    /* === Footer (Copied from index.html) === */
+    /* === Media Queries for Mobile === */
+    @media (max-width: 768px) {
+      header {
+        padding: 0.6rem 1rem;
+      }
+      .editor-controls {
+        flex-direction: column;
+        align-items: center;
+      }
+      .control-group {
+        max-width: 100%;
+      }
+      .canvas-container {
+        justify-content: flex-start;
+      }
+    }
+    @media (max-width: 480px) {
+      .editor-section {
+        padding: 4rem 0.5rem 1.5rem;
+      }
+      .canvas-container {
+        gap: 0.5rem;
+        padding: 0.5rem;
+      }
+      .checkout-sidebar {
+        width: 100%;
+      }
+    }
+    /* === Footer === */
     footer {
       text-align: center;
       padding: 1rem;
       background: var(--white);
       color: var(--black);
       border-top: 1px solid #ddd;
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
     }
   </style>
 </head>
@@ -328,6 +371,9 @@
     hamburger.addEventListener('click', () => {
       navMenu.classList.toggle('active');
     });
+    hamburger.addEventListener('touchstart', () => {
+      navMenu.classList.toggle('active');
+    });
     document.addEventListener('click', (e) => {
       if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
         navMenu.classList.remove('active');
@@ -339,7 +385,14 @@
       e.preventDefault();
       checkoutSidebar.classList.toggle('active');
     });
+    cartIcon.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      checkoutSidebar.classList.toggle('active');
+    });
     closeCheckout.addEventListener('click', () => {
+      checkoutSidebar.classList.remove('active');
+    });
+    closeCheckout.addEventListener('touchstart', () => {
       checkoutSidebar.classList.remove('active');
     });
 
@@ -363,10 +416,10 @@
           border: 5
         };
         tiles.push(tile);
-        renderTiles();
+        requestAnimationFrame(renderTiles);
         updateCheckout();
       };
-      photoUpload.value = ''; // Reset input
+      photoUpload.value = '';
     }
 
     // Render Tiles
@@ -374,7 +427,7 @@
       canvasContainer.innerHTML = '';
       const containerWidth = canvasContainer.offsetWidth;
       const totalTiles = tiles.length;
-      const maxWidthPerTile = totalTiles ? (containerWidth - (totalTiles - 1) * 10) / totalTiles : containerWidth;
+      const maxWidthPerTile = totalTiles ? (containerWidth - (totalTiles - 1) * 8) / totalTiles : containerWidth;
 
       tiles.forEach((tile, index) => {
         const canvas = document.createElement('canvas');
@@ -412,7 +465,7 @@
       const effect = document.getElementById('effect').value;
       const border = document.getElementById('border').value;
       tiles[tiles.length - 1] = { ...tiles[tiles.length - 1], frame, size, effect, border: parseInt(border) };
-      renderTiles();
+      requestAnimationFrame(renderTiles);
       updateCheckout();
     }
 
@@ -433,7 +486,7 @@
       const tileCount = tiles.length;
       const pricePerTile = 1000;
       const subtotal = tileCount * pricePerTile;
-      const discount = subtotal * 0.25; // WELCOME 25% discount
+      const discount = subtotal * 0.25;
       const shipping = subtotal >= 2000 ? 0 : 200;
       const grandTotal = subtotal - discount + shipping;
 
@@ -443,6 +496,11 @@
       document.getElementById('shipping').textContent = `${shipping} PHP`;
       document.getElementById('grandTotal').textContent = `${grandTotal} PHP`;
     }
+
+    // Optimize for Mobile Resize
+    window.addEventListener('resize', () => {
+      requestAnimationFrame(renderTiles);
+    });
   </script>
 </body>
 </html>
