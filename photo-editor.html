@@ -1,71 +1,240 @@
-<!-- ... existing HTML code ... -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Editor</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/babel-standalone@7.22.9/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
 
-<!-- Add checkout pop-up -->
-<div class="checkout-popup" id="checkoutPopup">
-  <div class="popup-header">
-    <h2>Checkout</h2>
-    <button class="close-btn" id="closeCheckoutBtn">&times;</button>
-  </div>
-  <div class="popup-content">
-    <div class="customer-info">
-      <button class="add-address-btn">Add Address</button>
-      <button class="add-payment-btn">Add Payment Method</button>
-    </div>
-    <div class="order-summary">
-      <h3>Order Summary</h3>
-      <p>Total Tiles: <span id="totalTiles">0</span></p>
-      <p>Subtotal: <span id="subtotal">0 PHP</span></p>
-      <p>Discount: <span id="discount">0 PHP</span></p>
-      <p>Shipping: <span id="shipping">0 PHP</span></p>
-      <p>Grand Total: <span id="grandTotal">0 PHP</span></p>
-    </div>
-    <button class="place-order-btn">Place Order</button>
-  </div>
-</div>
+    // Available options for customization
+    const frameColors = ['Oak Wood', 'White', 'Classic Black'];
+    const sizes = [
+      { label: '8″ × 8″', width: 21.35, height: 21.35 },
+      { label: '8″ × 11″', width: 21.35, height: 27.94 },
+      { label: '11″ × 8″', width: 27.94, height: 21.35 },
+      { label: '12″ × 12″', width: 31.6, height: 31.6 },
+      { label: '12″ × 16″', width: 31.6, height: 41.75 },
+      { label: '16″ × 12″', width: 41.75, height: 31.6 },
+      { label: '20″ × 20″', width: 49.53, height: 49.53 },
+      { label: '20″ × 27″', width: 49.53, height: 68.58 },
+      { label: '27″ × 20″', width: 68.58, height: 49.53 },
+    ];
+    const effects = ['none', 'grayscale', 'sepia', 'blur', 'brightness'];
 
-<!-- ... existing script code ... -->
+    const PhotoEditor = () => {
+      const [photos, setPhotos] = useState([]);
+      const [showCheckout, setShowCheckout] = useState(false);
+      const canvasRef = useRef(null);
 
-// Add event listener for cart icon
-const cartIcon = document.getElementById('cartIcon');
-const checkoutPopup = document.getElementById('checkoutPopup');
-const closeCheckoutBtn = document.getElementById('closeCheckoutBtn');
+      // Handle photo upload
+      const handlePhotoUpload = (e) => {
+        if (photos.length >= 7) return;
+        const file = e.target.files[0];
+        if (file) {
+          const url = URL.createObjectURL(file);
+          setPhotos([...photos, {
+            id: Date.now(),
+            url,
+            frame: 'Oak Wood',
+            size: sizes[0],
+            effect: 'none',
+            border: 2,
+          }]);
+        }
+      };
 
-cartIcon.addEventListener('click', () => {
-  checkoutPopup.classList.add('active');
-});
+      // Update photo properties
+      const updatePhoto = (id, property, value) => {
+        setPhotos(photos.map(photo =>
+          photo.id === id ? { ...photo, [property]: value } : photo
+        ));
+      };
 
-closeCheckoutBtn.addEventListener('click', () => {
-  checkoutPopup.classList.remove('active');
-});
+      // Calculate scale to fit photos horizontally
+      const calculateScale = () => {
+        if (!canvasRef.current || photos.length === 0) return 1;
+        const canvasWidth = canvasRef.current.offsetWidth;
+        const totalWidth = photos.reduce((sum, photo) => sum + photo.size.width + photo.border * 2, 0);
+        return totalWidth > canvasWidth ? canvasWidth / totalWidth : 1;
+      };
 
-// Calculate order summary
-function calculateOrderSummary() {
-  const totalTiles = gallery.children.length;
-  const subtotal = totalTiles * 1000;
-  const discount = subtotal >= 2000 ? subtotal * 0.25 : 0;
-  const shipping = subtotal >= 2000 ? 0 : 200; // standard shipping fee
-  const grandTotal = subtotal - discount + shipping;
+      // Checkout calculations
+      const calculateCheckout = () => {
+        const tilePrice = 1000;
+        const totalTiles = photos.length;
+        const subtotal = totalTiles * tilePrice;
+        const isNewCustomer = true; // Assuming new customer for demo
+        const discount = isNewCustomer ? subtotal * 0.25 : 0;
+        const shipping = subtotal >= 2000 ? 0 : 500; // Example shipping fee
+        const grandTotal = subtotal - discount + shipping;
 
-  document.getElementById('totalTiles').textContent = totalTiles;
-  document.getElementById('subtotal').textContent = `${subtotal} PHP`;
-  document.getElementById('discount').textContent = `${discount} PHP`;
-  document.getElementById('shipping').textContent = `${shipping} PHP`;
-  document.getElementById('grandTotal').textContent = `${grandTotal} PHP`;
-}
+        return { totalTiles, subtotal, discount, shipping, grandTotal };
+      };
 
-// Apply WELCOME code for new customers
-function applyWelcomeCode() {
-  const subtotalElement = document.getElementById('subtotal');
-  const subtotal = parseInt(subtotalElement.textContent.replace(' PHP', ''));
-  const discount = subtotal * 0.25;
-  document.getElementById('discount').textContent = `${discount} PHP`;
-  const grandTotal = subtotal - discount;
-  document.getElementById('grandTotal').textContent = `${grandTotal} PHP`;
-}
+      return (
+        <div className="min-h-screen bg-gray-100 flex flex-col p-4">
+          {/* Header */}
+          <header className="flex justify-between items-center mb-4">
+            <h1 className="text-2xl font-bold">Photo Editor</h1>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              onClick={() => setShowCheckout(true)}
+            >
+              Cart ({photos.length})
+            </button>
+          </header>
 
-// Call calculateOrderSummary and applyWelcomeCode when a photo is added
-photoUpload.addEventListener('change', (event) => {
-  // ... existing code ...
-  calculateOrderSummary();
-  applyWelcomeCode();
-});
+          {/* Photo Upload */}
+          {photos.length < 7 && (
+            <div className="mb-4">
+              <input
+                type="file"
+                accept="image/*"
+                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600"
+                onChange={handlePhotoUpload}
+              />
+            </div>
+          )}
+
+          {/* Canvas for Photos */}
+          <div
+            ref={canvasRef}
+            className="flex flex-row gap-2 overflow-x-auto scroll-smooth mb-4"
+            style={{ scrollBehavior: 'smooth' }}
+          >
+            {photos.map(photo => (
+              <div
+                key={photo.id}
+                className="flex-shrink-0"
+                style={{
+                  transform: `scale(${calculateScale()})`,
+                  transition: 'transform 0.3s ease-in-out',
+                }}
+              >
+                <div
+                  className={`p-${photo.border} ${photo.frame === 'Oak Wood' ? 'bg-yellow-700' : photo.frame === 'White' ? 'bg-white' : 'bg-black'} shadow-lg`}
+                >
+                  <img
+                    src={photo.url}
+                    alt="User uploaded"
+                    className={`w-[${photo.size.width}cm] h-[${photo.size.height}cm] object-cover ${photo.effect}`}
+                    style={{
+                      filter: photo.effect === 'grayscale' ? 'grayscale(100%)' :
+                              photo.effect === 'sepia' ? 'sepia(100%)' :
+                              photo.effect === 'blur' ? 'blur(5px)' :
+                              photo.effect === 'brightness' ? 'brightness(150%)' : 'none',
+                      transition: 'all 0.3s ease-in-out',
+                    }}
+                  />
+                </div>
+
+                {/* Customization Controls */}
+                <div className="mt-2 space-y-2">
+                  <div>
+                    <label className="block text-sm font-medium">Frame</label>
+                    <select
+                      className="w-full p-2 border rounded"
+                      value={photo.frame}
+                      onChange={(e) => updatePhoto(photo.id, 'frame', e.target.value)}
+                    >
+                      {frameColors.map(color => (
+                        <option key={color} value={color}>{color}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium">Size</label>
+                    <select
+                      className="w-full p-2 border rounded"
+                      value={photo.size.label}
+                      onChange={(e) => {
+                        const selectedSize = sizes.find(size => size.label === e.target.value);
+                        updatePhoto(photo.id, 'size', selectedSize);
+                      }}
+                    >
+                      {sizes.map(size => (
+                        <option key={size.label} value={size.label}>{size.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium">Effect</label>
+                    <select
+                      className="w-full p-2 border rounded"
+                      value={photo.effect}
+                      onChange={(e) => updatePhoto(photo.id, 'effect', e.target.value)}
+                    >
+                      {effects.map(effect => (
+                        <option key={effect} value={effect}>{effect.charAt(0).toUpperCase() + effect.slice(1)}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium">Border Thickness</label>
+                    <input
+                      type="range"
+                      min="1"
+                      max="5"
+                      value={photo.border}
+                      onChange={(e) => updatePhoto(photo.id, 'border', parseInt(e.target.value))}
+                      className="w-full"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Checkout Pop-up */}
+          {showCheckout && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-end">
+              <div className="bg-white w-full md:w-1/3 p-6 h-full overflow-y-auto">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Checkout</h2>
+                  <button
+                    className="text-gray-500 hover:text-gray-700"
+                    onClick={() => setShowCheckout(false)}
+                  >
+                    ✕
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  <button className="w-full bg-gray-200 p-2 rounded hover:bg-gray-300">
+                    Add Address
+                  </button>
+                  <button className="w-full bg-gray-200 p-2 rounded hover:bg-gray-300">
+                    Add Payment Method
+                  </button>
+                  <div>
+                    <h3 className="text-lg font-semibold">Order Summary</h3>
+                    <div className="space-y-2 mt-2">
+                      <p>Total Tiles: {calculateCheckout().totalTiles}</p>
+                      <p>Subtotal: ₱{calculateCheckout().subtotal.toFixed(2)}</p>
+                      <p>Discount (WELCOME): -₱{calculateCheckout().discount.toFixed(2)}</p>
+                      <p>Shipping: ₱{calculateCheckout().shipping.toFixed(2)}</p>
+                      <p className="font-bold">Grand Total: ₱{calculateCheckout().grandTotal.toFixed(2)}</p>
+                    </div>
+                  </div>
+                  <button className="w-full bg-green-500 text-white p-3 rounded hover:bg-green-600">
+                    Place Order
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    ReactDOM.render(<PhotoEditor />, document.getElementById('root'));
+  </script>
+</body>
+</html>
