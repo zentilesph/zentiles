@@ -2,134 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zentiles | Create Art with Ease</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-  <!-- Font Awesome for Social Media Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>zentiles – just stick and snap!</title>
+  
+  <!-- Google Font: Poppins for minimalist lowercase logo -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for social icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <style>
-    /* 
-    // === GLOBAL STYLES ===
-    */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* === Global Styles === */
+    :root {
+      --oak: #ce9f6f; /* Oak wood tone */
+      --black: #000000;
+      --white: #ffffff;
     }
 
     body {
+      margin: 0;
       font-family: 'Poppins', sans-serif;
-      color: #333;
-      overflow-x: hidden;
-      background: #fff;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
     }
 
     a {
       text-decoration: none;
       color: inherit;
     }
-    /* --- End GLOBAL STYLES --- */
 
-    /* 
-    // === HEADER ===
-    */
+    /* === Header & Navigation === */
     header {
       position: fixed;
       top: 0;
+      left: 0;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      background: var(--white);
       z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
-    /* Logo: bigger size and small caps */
+    /* Logo Styling */
     .logo {
-      font-size: 2.4rem;
-      font-weight: 700;
-      font-variant: small-caps;
-      color: #222;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--oak);
+      text-transform: lowercase;
       letter-spacing: 2px;
     }
 
-    /* Hamburger menu button */
+    /* Email Icon */
+    .email-icon {
+      font-size: 1.4rem;
+      color: var(--black);
+      transition: color 0.3s ease;
+    }
+    .email-icon:hover {
+      color: var(--oak);
+    }
+
+    /* Hamburger Menu */
     .hamburger {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      font-size: 1.8rem;
       cursor: pointer;
-      z-index: 1001;
+      color: var(--black);
     }
 
-    .hamburger span {
-      width: 25px;
-      height: 3px;
-      background: #333;
-      border-radius: 2px;
-      transition: 0.3s;
-    }
-
-    /* Side menu styles */
-    .menu {
+    .nav-menu {
       position: fixed;
       top: 0;
-      right: -250px;
+      left: -100%;
       width: 250px;
       height: 100%;
-      background: #fff;
-      box-shadow: -2px 0 5px rgba(0,0,0,0.2);
-      padding: 50px 20px;
-      transition: 0.3s;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      z-index: 1000;
+      background: var(--white);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      transition: left 0.3s ease;
+      padding-top: 4rem;
+      z-index: 1100;
     }
 
-    .menu.active {
-      right: 0;
+    .nav-menu.active {
+      left: 0;
     }
 
-    .menu a {
-      font-size: 1.2rem;
-      color: #333;
-      transition: 0.3s;
+    .nav-menu a {
+      display: block;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      color: var(--black);
+      border-bottom: 1px solid #f0f0f0;
     }
 
-    .menu a:hover {
-      color: #555;
+    .nav-menu a:hover {
+      background: var(--oak);
+      color: var(--white);
     }
 
-    /* Email icon */
-    .email-icon {
-      font-size: 1.5rem;
-      color: #333;
-      margin-left: auto;
-      margin-right: 20px;
-      cursor: pointer;
-    }
-    /* --- End HEADER --- */
-
-    /* 
-    // === HERO SECTION ===
-    */
+    /* === Hero Section === */
     .hero {
       position: relative;
-      width: 100%;
       height: 100vh;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
     }
 
-    /* Background video */
     .hero video {
       position: absolute;
       top: 0;
@@ -141,316 +121,266 @@
     }
 
     .hero-content {
-      color: #fff;
-      z-index: 10;
+      position: relative;
+      text-align: center;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--white);
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2rem;
+      border-radius: 12px;
       max-width: 90%;
+      margin: auto;
     }
 
     .hero-content h1 {
-      font-size: 2.8rem;
-      margin-bottom: 10px;
+      font-size: 3rem;
+      text-transform: lowercase;
+      margin-bottom: 1rem;
     }
 
-    /* Motto/tagline styling */
-    .hero-content p {
-      font-size: 1.3rem;
+    /* Catchy motto */
+    .hero-content p.motto {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      color: var(--oak);
       font-weight: 400;
-      margin-bottom: 20px;
-      opacity: 0.9;
     }
 
-    .hero-content .cta-btn {
-      padding: 12px 25px;
-      background: #222;
-      color: #fff;
-      border-radius: 30px;
+    .cta-btn {
+      display: inline-block;
+      background: var(--oak);
+      color: var(--white);
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
       font-size: 1.2rem;
-      font-weight: 600;
-      transition: 0.3s;
+      transition: background 0.3s ease;
     }
 
-    .hero-content .cta-btn:hover {
-      background: #444;
+    .cta-btn:hover {
+      background: var(--black);
     }
-    /* --- End HERO SECTION --- */
 
-    /* 
-    // === FEATURE VIDEO SECTIONS ===
-    */
-    .section {
+    /* === Split Video Sections === */
+    .split-section {
       display: flex;
       flex-wrap: wrap;
-      padding: 80px 5%;
       align-items: center;
-      gap: 30px;
+      padding: 4rem 2rem;
+      gap: 2rem;
     }
 
-    .section video {
-      width: 100%;
-      max-width: 500px;
-      border-radius: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    .section-text {
+    .split-section video {
       flex: 1;
-      font-size: 2rem;
-      font-weight: 600;
-      color: #222;
-      text-align: center;
+      max-width: 500px;
+      border-radius: 10px;
     }
 
-    .reverse {
+    .split-section .text {
+      flex: 1;
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--black);
+    }
+
+    /* Alternate video/text layout */
+    .split-section:nth-child(even) {
       flex-direction: row-reverse;
     }
-    /* --- End FEATURE VIDEO SECTIONS --- */
 
-    /* 
-    // === SOCIAL MEDIA SECTION ===
-    */
+    /* === Social Media Section === */
     .social-section {
-      background: #fafafa;
-      padding: 50px 20px;
       text-align: center;
+      padding: 3rem 1rem;
+      background: #fdf9f3;
     }
 
     .social-section h2 {
-      font-size: 1.8rem;
-      margin-bottom: 30px;
-      color: #222;
+      font-size: 2rem;
+      color: var(--oak);
+      margin-bottom: 1rem;
+      text-transform: lowercase;
     }
 
     .social-icons {
       display: flex;
       justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
+      gap: 2rem;
+      font-size: 2rem;
+      margin-top: 1rem;
     }
 
     .social-icons a {
-      text-align: center;
-      color: #333;
-      font-size: 2rem;
-      transition: color 0.3s;
+      color: var(--black);
+      transition: color 0.3s ease;
     }
 
     .social-icons a:hover {
-      color: #555;
+      color: var(--oak);
     }
 
     .social-icons p {
-      margin-top: 8px;
       font-size: 0.9rem;
-      color: #444;
+      margin-top: 0.3rem;
     }
-    /* --- End SOCIAL MEDIA SECTION --- */
 
-    /* 
-    // === CONTACT FORM ===
-    */
+    /* === Contact Form === */
     .contact-section {
-      padding: 60px 20px;
+      padding: 3rem 2rem;
       text-align: center;
-      background: #f9f9f9;
     }
 
     .contact-section h2 {
-      margin-bottom: 20px;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-transform: lowercase;
+      color: var(--oak);
     }
 
     form {
-      max-width: 400px;
+      max-width: 500px;
       margin: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+      background: #fdf9f3;
+      padding: 1.5rem;
+      border-radius: 10px;
+      border: 1px solid var(--oak);
     }
 
-    form input, form textarea, form button {
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+    label {
+      display: block;
+      margin: 0.5rem 0 0.3rem;
+      font-weight: 500;
+      color: var(--black);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--oak);
+      border-radius: 6px;
       font-size: 1rem;
     }
 
-    form button {
-      background: #222;
-      color: #fff;
+    button {
+      background: var(--oak);
+      color: var(--white);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      font-size: 1.2rem;
       cursor: pointer;
-      transition: 0.3s;
     }
 
-    form button:hover {
-      background: #444;
+    button:hover {
+      background: var(--black);
     }
-    /* --- End CONTACT FORM --- */
 
-    /* 
-    // === FOOTER ===
-    */
+    /* === Footer === */
     footer {
       text-align: center;
-      padding: 20px;
-      background: #222;
-      color: #fff;
-      margin-top: 40px;
+      padding: 1rem;
+      background: var(--white);
+      color: var(--black);
+      border-top: 1px solid #ddd;
     }
-    /* --- End FOOTER --- */
-
-    /* 
-    // === RESPONSIVE DESIGN ===
-    */
-    @media (max-width: 768px) {
-      .section {
-        flex-direction: column;
-        text-align: center;
-      }
-      .section-text {
-        font-size: 1.5rem;
-      }
-      .hero-content h1 {
-        font-size: 2rem;
-      }
-      .hero-content p {
-        font-size: 1rem;
-      }
-      .social-icons {
-        gap: 25px;
-      }
-    }
-    /* --- End RESPONSIVE DESIGN --- */
   </style>
 </head>
-
 <body>
-  <!-- === HEADER === -->
+  <!-- === Header === -->
   <header>
+    <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
     <div class="logo">zentiles</div>
-    <a href="mailto:zentiles@gmail.com" class="email-icon" title="Send us an email">✉️</a>
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <nav class="menu" id="menu">
-      <a href="index.html">Home</a>
-      <a href="photo-editor.html">Create Art</a>
-      <a href="#contact">Contact</a>
-      <a href="#about">About</a>
-    </nav>
+    <a href="mailto:zentiles@gmail.com" class="email-icon"><i class="fas fa-envelope"></i></a>
   </header>
-  <!-- --- End HEADER --- -->
+  <!-- --- End Header --- -->
 
-  <!-- === HERO SECTION === -->
+  <!-- === Hamburger Navigation Menu === -->
+  <nav class="nav-menu" id="navMenu">
+    <a href="photo-editor.html">Create Art</a>
+    <a href="#gallery">Gallery Walls</a>
+    <a href="#contact">Contact Us</a>
+    <a href="#about">About</a>
+  </nav>
+  <!-- --- End Navigation Menu --- -->
+
+  <!-- === Hero Section === -->
   <section class="hero">
-    <video 
-      src="assets/video/hero-bg.mp4" 
-      autoplay 
-      muted 
-      loop 
-      playsinline 
-      preload="auto">
-    </video>
+    <video src="assets/video/hero-bg.mp4" autoplay muted loop playsinline preload="auto"></video>
     <div class="hero-content">
-      <h1>Create Memories with Zentiles</h1>
-      <!-- Catchy motto/tagline -->
-      <p>Transform your walls, one tile at a time.</p>
-      <a href="photo-editor.html" class="cta-btn">Create Art</a>
+      <h1>create memories with zentiles</h1>
+      <p class="motto">your walls, your unique story</p>
+      <a href="photo-editor.html" class="cta-btn">create art</a>
     </div>
   </section>
-  <!-- --- End HERO SECTION --- -->
+  <!-- --- End Hero Section --- -->
 
-  <!-- === FEATURE SECTION 1 === -->
-  <section class="section">
-    <video 
-      src="assets/video/demo-apply.mp4" 
-      autoplay 
-      muted 
-      loop 
-      playsinline 
-      preload="auto">
-    </video>
-    <div class="section-text">
-      Peel. Stick. Snap.
-    </div>
+  <!-- === Split Section 1 === -->
+  <section class="split-section">
+    <video src="assets/video/demo-apply.mp4" autoplay muted loop playsinline></video>
+    <div class="text">stick, snap, and style with ease</div>
   </section>
-  <!-- --- End FEATURE SECTION 1 --- -->
 
-  <!-- === FEATURE SECTION 2 === -->
-  <section class="section reverse">
-    <video 
-      src="assets/video/demo-room.mp4" 
-      autoplay 
-      muted 
-      loop 
-      playsinline 
-      preload="auto">
-    </video>
-    <div class="section-text">
-      Magnetic. Sticky. Easy.
-    </div>
+  <!-- === Split Section 2 === -->
+  <section class="split-section">
+    <video src="assets/video/demo-room.mp4" autoplay muted loop playsinline></video>
+    <div class="text">magnetic & sticky tiles, effortlessly chic</div>
   </section>
-  <!-- --- End FEATURE SECTION 2 --- -->
+  <!-- --- End Split Sections --- -->
 
-  <!-- === SOCIAL MEDIA SECTION === -->
+  <!-- === Social Media Section === -->
   <section class="social-section">
-    <h2>Follow Us @zentilesph</h2>
+    <h2>follow us</h2>
     <div class="social-icons">
-      <a href="https://instagram.com/zentilesph" target="_blank">
-        <i class="fab fa-instagram"></i>
-        <p>@zentilesph</p>
-      </a>
-      <a href="https://facebook.com/zentilesph" target="_blank">
-        <i class="fab fa-facebook"></i>
-        <p>@zentilesph</p>
-      </a>
-      <a href="https://tiktok.com/@zentilesph" target="_blank">
-        <i class="fab fa-tiktok"></i>
-        <p>@zentilesph</p>
-      </a>
-      <a href="https://x.com/zentilesph" target="_blank">
-        <i class="fab fa-x-twitter"></i>
-        <p>@zentilesph</p>
-      </a>
+      <a href="#" target="_blank"><i class="fab fa-instagram"></i><p>@zentilesph</p></a>
+      <a href="#" target="_blank"><i class="fab fa-facebook"></i><p>@zentilesph</p></a>
+      <a href="#" target="_blank"><i class="fab fa-tiktok"></i><p>@zentilesph</p></a>
+      <a href="#" target="_blank"><i class="fab fa-x-twitter"></i><p>@zentilesph</p></a>
     </div>
   </section>
-  <!-- --- End SOCIAL MEDIA SECTION --- -->
+  <!-- --- End Social Media Section --- -->
 
-  <!-- === CONTACT SECTION === -->
+  <!-- === Contact Form Section === -->
   <section class="contact-section" id="contact">
-    <h2>Contact Us</h2>
-    <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
+    <h2>contact us</h2>
+    <form action="https://formspree.io/f/meolvqab" method="POST">
+      <label for="name">full name</label>
+      <input id="name" name="name" type="text" placeholder="your full name" required />
+
+      <label for="email">email address</label>
+      <input id="email" name="_replyto" type="email" placeholder="your.email@example.com" required />
+
+      <label for="message">message</label>
+      <textarea id="message" name="message" rows="4" placeholder="how can we help you?"></textarea>
+
+      <button type="submit">send message</button>
     </form>
   </section>
-  <!-- --- End CONTACT SECTION --- -->
+  <!-- --- End Contact Form Section --- -->
 
-  <!-- === FOOTER === -->
+  <!-- === Footer === -->
   <footer>
-    &copy; 2025 Zentiles. All rights reserved.
+    <p>© 2025 zentiles. all rights reserved.</p>
   </footer>
-  <!-- --- End FOOTER --- -->
+  <!-- --- End Footer --- -->
 
-  <!-- === JAVASCRIPT === -->
+  <!-- === JavaScript: Hamburger Menu Auto-Close === -->
   <script>
     const hamburger = document.getElementById('hamburger');
-    const menu = document.getElementById('menu');
+    const navMenu = document.getElementById('navMenu');
 
-    // Toggle side menu open/close
+    // Open menu
     hamburger.addEventListener('click', () => {
-      menu.classList.toggle('active');
+      navMenu.classList.toggle('active');
     });
 
-    // Close menu when clicking outside of it
+    // Close when clicking outside
     document.addEventListener('click', (e) => {
-      if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
-        menu.classList.remove('active');
+      if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        navMenu.classList.remove('active');
       }
     });
   </script>
-  <!-- --- End JAVASCRIPT --- -->
+  <!-- --- End JavaScript --- -->
 </body>
 </html>
