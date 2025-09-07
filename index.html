@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>zentiles – just stick and snap!</title>
   
-  <!-- Google Font: Poppins for minimalist lowercase logo -->
+  <!-- Google Font: Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome for social icons -->
+  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <style>
     /* === Global Styles === */
     :root {
-      --oak: #ce9f6f; /* Oak wood tone */
+      --oak: #ce9f6f;
       --black: #000000;
       --white: #ffffff;
     }
@@ -139,7 +139,6 @@
       margin-bottom: 1rem;
     }
 
-    /* Catchy motto */
     .hero-content p.motto {
       font-size: 1.4rem;
       margin-bottom: 1.5rem;
@@ -161,7 +160,7 @@
       background: var(--black);
     }
 
-    /* === Split Video Sections === */
+    /* === Split Section === */
     .split-section {
       display: flex;
       flex-wrap: wrap;
@@ -183,7 +182,6 @@
       color: var(--black);
     }
 
-    /* Alternate video/text layout */
     .split-section:nth-child(even) {
       flex-direction: row-reverse;
     }
@@ -222,6 +220,61 @@
     .social-icons p {
       font-size: 0.9rem;
       margin-top: 0.3rem;
+    }
+
+    /* === FAQs Section === */
+    .faq-section {
+      padding: 3rem 2rem;
+      background: #fff8f1;
+    }
+
+    .faq-section h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--oak);
+      margin-bottom: 2rem;
+      text-transform: lowercase;
+    }
+
+    .faq-item {
+      max-width: 800px;
+      margin: 0 auto 1rem;
+      border: 1px solid var(--oak);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .faq-question {
+      background: var(--oak);
+      color: var(--white);
+      padding: 1rem;
+      font-size: 1.2rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-question i {
+      transition: transform 0.3s ease;
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 1rem;
+      background: var(--white);
+      color: var(--black);
+      font-size: 1rem;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
     }
 
     /* === Contact Form === */
@@ -293,55 +346,147 @@
     <div class="logo">zentiles</div>
     <a href="mailto:zentiles@gmail.com" class="email-icon"><i class="fas fa-envelope"></i></a>
   </header>
-  <!-- --- End Header --- -->
 
-  <!-- === Hamburger Navigation Menu === -->
+  <!-- === Hamburger Navigation === -->
   <nav class="nav-menu" id="navMenu">
     <a href="photo-editor.html">Create Art</a>
     <a href="#gallery">Gallery Walls</a>
+    <a href="#faq">FAQs</a>
     <a href="#contact">Contact Us</a>
     <a href="#about">About</a>
   </nav>
-  <!-- --- End Navigation Menu --- -->
 
   <!-- === Hero Section === -->
-<section class="hero">
-  <video src="assets/video/demo-apply.mp4" autoplay muted loop playsinline preload="auto"></video>
-  <div class="hero-content">
-    <h1>create memories with zentiles</h1>
-    <p class="motto">your walls, your unique story</p>
-    <a href="photo-editor.html" class="cta-btn">create art</a>
-  </div>
-</section>
-<!-- --- End Hero Section --- -->
+  <section class="hero">
+    <video src="assets/video/demo-apply.mp4" autoplay muted loop playsinline preload="auto"></video>
+    <div class="hero-content">
+      <h1>create memories with zentiles</h1>
+      <p class="motto">your walls, your unique story</p>
+      <a href="photo-editor.html" class="cta-btn">create art</a>
+    </div>
+  </section>
 
-  <!-- === Split Section 1 (Hero BG video moved here) === -->
-<section class="split-section">
-  <video src="assets/video/hero-bg.mp4" autoplay muted loop playsinline></video>
-  <div class="text">stick, snap, and style with ease</div>
-</section>
-
+  <!-- === Split Section 1 === -->
+  <section class="split-section">
+    <video src="assets/video/hero-bg.mp4" autoplay muted loop playsinline></video>
+    <div class="text">stick, snap, and style with ease</div>
+  </section>
 
   <!-- === Split Section 2 === -->
   <section class="split-section">
     <video src="assets/video/demo-room.mp4" autoplay muted loop playsinline></video>
     <div class="text">magnetic & sticky tiles, effortlessly chic</div>
   </section>
-  <!-- --- End Split Sections --- -->
 
   <!-- === Social Media Section === -->
   <section class="social-section">
     <h2>follow us</h2>
     <div class="social-icons">
-      <a href="#" target="_blank"><i class="fab fa-instagram"></i><p>@zentilesph</p></a>
-      <a href="#" target="_blank"><i class="fab fa-facebook"></i><p>@zentilesph</p></a>
-      <a href="#" target="_blank"><i class="fab fa-tiktok"></i><p>@zentilesph</p></a>
-      <a href="#" target="_blank"><i class="fab fa-x-twitter"></i><p>@zentilesph</p></a>
+      <a href="#"><i class="fab fa-instagram"></i><p>@zentilesph</p></a>
+      <a href="#"><i class="fab fa-facebook"></i><p>@zentilesph</p></a>
+      <a href="#"><i class="fab fa-tiktok"></i><p>@zentilesph</p></a>
+      <a href="#"><i class="fab fa-x-twitter"></i><p>@zentilesph</p></a>
     </div>
   </section>
-  <!-- --- End Social Media Section --- -->
 
-  <!-- === Contact Form Section === -->
+  <!-- === FAQs Section === -->
+  <section class="faq-section" id="faq">
+    <h2>zentiles faqs</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>1. How big are the tiles?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p>Available sizes include:</p>
+        <ul>
+          <li>8″ × 8″ (21.35 × 21.35 cm)</li>
+          <li>8″ × 11″ or 11″ × 8″ (21.35 × 27.94 cm or vice versa)</li>
+          <li>12″ × 12″ (31.6 × 31.6 cm)</li>
+          <li>12″ × 16″ or 16″ × 12″ (31.6 × 41.75 cm or vice versa)</li>
+          <li>20″ × 20″ (49.53 × 49.53 cm)</li>
+          <li>20″ × 27″ or 27″ × 20″ (49.53 × 68.58 cm or vice versa)</li>
+        </ul>
+        <p><strong>Note:</strong> Larger sizes available in other regions are not offered in the Philippines.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>2. How long does shipping take?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p>Expect delivery within <strong>10 days of ordering</strong>. Shipping is available only within the Philippines.</p>
+        <ul>
+          <li>Standard shipping: ₱0 for orders above a certain threshold, otherwise a small fee applies.</li>
+          <li>Express shipping: Region-dependent, option available during checkout.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>3. Can I mix sizes and styles in one order?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p>Yes! You can mix various sizes and styles in a single order.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>4. Can the tiles be reused and removed cleanly?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p>Absolutely! The adhesive is formulated to stick securely while removing cleanly, leaving no wall damage. The tiles are reusable and maintain their structure after multiple repositionings.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>5. What if I'm unhappy with my order?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p><strong>Happiness Guarantee:</strong></p>
+        <ul>
+          <li>No returns for personalized products.</li>
+          <li>If your order is damaged, defective, or lost in transit, we’ll send a replacement at no charge.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>6. Where is this produced?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p>Tiles are produced in the USA, UK, and Germany. Zentiles operates online only and has no physical stores in the Philippines.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>7. How much do the tiles weigh?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p>Example weights for framed tiles:</p>
+        <ul>
+          <li>8″ × 8″: ~125 g</li>
+          <li>12″ × 16″: ~304 g</li>
+          <li>20″ × 20″: ~475 g</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- === Contact Section === -->
   <section class="contact-section" id="contact">
     <h2>contact us</h2>
     <form action="https://formspree.io/f/meolvqab" method="POST">
@@ -357,31 +502,34 @@
       <button type="submit">send message</button>
     </form>
   </section>
-  <!-- --- End Contact Form Section --- -->
 
   <!-- === Footer === -->
   <footer>
     <p>© 2025 zentiles. all rights reserved.</p>
   </footer>
-  <!-- --- End Footer --- -->
 
-  <!-- === JavaScript: Hamburger Menu Auto-Close === -->
+  <!-- === JavaScript === -->
   <script>
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');
 
-    // Open menu
     hamburger.addEventListener('click', () => {
       navMenu.classList.toggle('active');
     });
 
-    // Close when clicking outside
     document.addEventListener('click', (e) => {
       if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
         navMenu.classList.remove('active');
       }
     });
+
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    });
   </script>
-  <!-- --- End JavaScript --- -->
 </body>
 </html>
