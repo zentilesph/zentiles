@@ -366,16 +366,16 @@
     </div>
   </section>
 
-  <!-- === Split Section 1 === -->
-  <section class="split-section">
-    <video src="assets/video/hero-bg.mp4" autoplay muted loop playsinline></video>
-    <div class="text">stick, snap, and style with ease</div>
-  </section>
-
-  <!-- === Split Section 2 === -->
+  <!-- === Split Section 1 (Swapped) === -->
   <section class="split-section">
     <video src="assets/video/demo-room.mp4" autoplay muted loop playsinline></video>
     <div class="text">magnetic & sticky tiles, effortlessly chic</div>
+  </section>
+
+  <!-- === Split Section 2 (Swapped) === -->
+  <section class="split-section">
+    <video src="assets/video/hero-bg.mp4" autoplay muted loop playsinline></video>
+    <div class="text">stick, snap, and style with ease</div>
   </section>
 
   <!-- === Social Media Section === -->
@@ -523,11 +523,15 @@
       }
     });
 
-    // FAQ Accordion
+    // FAQ Accordion with Auto-Close
     const faqItems = document.querySelectorAll('.faq-item');
     faqItems.forEach(item => {
-      item.querySelector('.faq-question').addEventListener('click', () => {
-        item.classList.toggle('active');
+      const question = item.querySelector('.faq-question');
+      question.addEventListener('click', () => {
+        faqItems.forEach(faq => {
+          if (faq !== item) faq.classList.remove('active'); // Close others
+        });
+        item.classList.toggle('active'); // Toggle current
       });
     });
   </script>
