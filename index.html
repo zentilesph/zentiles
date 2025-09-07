@@ -6,6 +6,8 @@
   <title>Zentiles | Create Art with Ease</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome for Social Media Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
     /* 
@@ -32,7 +34,6 @@
 
     /* 
     // === HEADER ===
-    // Includes logo, hamburger menu, and email icon
     */
     header {
       position: fixed;
@@ -49,9 +50,9 @@
 
     /* Logo: bigger size and small caps */
     .logo {
-      font-size: 2.4rem; /* increased from 1.8rem */
+      font-size: 2.4rem;
       font-weight: 700;
-      font-variant: small-caps; /* makes text small caps */
+      font-variant: small-caps;
       color: #222;
       letter-spacing: 2px;
     }
@@ -205,6 +206,46 @@
     /* --- End FEATURE VIDEO SECTIONS --- */
 
     /* 
+    // === SOCIAL MEDIA SECTION ===
+    */
+    .social-section {
+      background: #fafafa;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .social-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      color: #222;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .social-icons a {
+      text-align: center;
+      color: #333;
+      font-size: 2rem;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #555;
+    }
+
+    .social-icons p {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #444;
+    }
+    /* --- End SOCIAL MEDIA SECTION --- */
+
+    /* 
     // === CONTACT FORM ===
     */
     .contact-section {
@@ -272,6 +313,9 @@
       }
       .hero-content p {
         font-size: 1rem;
+      }
+      .social-icons {
+        gap: 25px;
       }
     }
     /* --- End RESPONSIVE DESIGN --- */
@@ -347,6 +391,30 @@
     </div>
   </section>
   <!-- --- End FEATURE SECTION 2 --- -->
+
+  <!-- === SOCIAL MEDIA SECTION === -->
+  <section class="social-section">
+    <h2>Follow Us @zentilesph</h2>
+    <div class="social-icons">
+      <a href="https://instagram.com/zentilesph" target="_blank">
+        <i class="fab fa-instagram"></i>
+        <p>@zentilesph</p>
+      </a>
+      <a href="https://facebook.com/zentilesph" target="_blank">
+        <i class="fab fa-facebook"></i>
+        <p>@zentilesph</p>
+      </a>
+      <a href="https://tiktok.com/@zentilesph" target="_blank">
+        <i class="fab fa-tiktok"></i>
+        <p>@zentilesph</p>
+      </a>
+      <a href="https://x.com/zentilesph" target="_blank">
+        <i class="fab fa-x-twitter"></i>
+        <p>@zentilesph</p>
+      </a>
+    </div>
+  </section>
+  <!-- --- End SOCIAL MEDIA SECTION --- -->
 
   <!-- === CONTACT SECTION === -->
   <section class="contact-section" id="contact">
