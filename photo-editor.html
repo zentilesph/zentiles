@@ -1,241 +1,492 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Photo Editor</title>
-  <!-- Reference the locally built Tailwind CSS file -->
-  <link href="/dist/output.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/babel-standalone@7.22.9/babel.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>zentiles – create your art</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* === Global Styles === */
+    :root {
+      --oak: #ce9f6f;
+      --black: #000000;
+      --white: #ffffff;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* === Header & Navigation === */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--white);
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--oak);
+      text-transform: lowercase;
+      letter-spacing: 2px;
+    }
+    .email-icon, .cart-icon {
+      font-size: 1.4rem;
+      color: var(--black);
+      transition: color 0.3s ease;
+    }
+    .email-icon:hover, .cart-icon:hover {
+      color: var(--oak);
+    }
+    .hamburger {
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: var(--black);
+    }
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 250px;
+      height: 100%;
+      background: var(--white);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      transition: left 0.3s ease;
+      padding-top: 4rem;
+      z-index: 1100;
+    }
+    .nav-menu.active {
+      left: 0;
+    }
+    .nav-menu a {
+      display: block;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      color: var(--black);
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .nav-menu a:hover {
+      background: var(--oak);
+      color: var(--white);
+    }
+    /* === Editor Section === */
+    .editor-section {
+      padding: 6rem 2rem 3rem;
+      text-align: center;
+    }
+    .editor-section h1 {
+      font-size: 2rem;
+      color: var(--oak);
+      text-transform: lowercase;
+      margin-bottom: 1rem;
+    }
+    .editor-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .control-group {
+      background: #fdf9f3;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--oak);
+      flex-grow: 1; /* Allow control groups to grow */
+      min-width: 150px; /* Ensure they don't get too small */
+    }
+    .control-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .control-group select, .control-group input[type="range"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid var(--oak);
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .upload-btn {
+      background: var(--oak);
+      color: var(--white);
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 1rem auto;
+      display: inline-block;
+    }
+    .upload-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .upload-btn:hover:not(:disabled) {
+      background: var(--black);
+    }
+    .canvas-container {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+    }
+    .tile {
+      position: relative;
+      display: inline-block;
+    }
+    canvas {
+      border: 1px solid var(--black);
+      border-radius: 6px;
+    }
+    /* === Checkout Sidebar === */
+    .checkout-sidebar {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 400px;
+      height: 100%;
+      background: var(--white);
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease;
+      z-index: 1200;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+    .checkout-sidebar.active {
+      right: 0;
+    }
+    .checkout-sidebar h2 {
+      font-size: 1.8rem;
+      color: var(--oak);
+      text-transform: lowercase;
+      margin-bottom: 1rem;
+    }
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--black);
+    }
+    .checkout-btn {
+      background: var(--oak);
+      color: var(--white);
+      padding: 0.8rem;
+      border-radius: 6px;
+      margin: 0.5rem 0;
+      text-align: center;
+      display: block;
+    }
+    .checkout-btn:hover {
+      background: var(--black);
+    }
+    .order-summary {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #fdf9f3;
+      border-radius: 8px;
+      border: 1px solid var(--oak);
+    }
+    .order-summary p {
+      margin: 0.5rem 0;
+    }
+    .place-order-btn {
+      background: var(--oak);
+      color: var(--white);
+      padding: 1rem;
+      border-radius: 6px;
+      font-size: 1.2rem;
+      text-align: center;
+      display: block;
+      margin-top: 1rem;
+    }
+    .place-order-btn:hover {
+      background: var(--black);
+    }
+    /* === Footer === */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: var(--white);
+      color: var(--black);
+      border-top: 1px solid #ddd;
+    }
+    /* === Mobile Styles === */
+    @media (max-width: 768px) {
+      body {
+        font-size: 0.9rem;
+      }
+      header {
+        padding: 0.8rem 1rem;
+      }
+      .logo {
+        font-size: 1.5rem;
+      }
+      .email-icon, .cart-icon {
+        font-size: 1.2rem;
+      }
+      .hamburger {
+        font-size: 1.5rem;
+      }
+      .editor-section {
+        padding: 5rem 1rem 2rem;
+      }
+      .editor-section h1 {
+        font-size: 1.5rem;
+      }
+      .editor-controls {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .control-group {
+        width: 100%;
+        min-width: auto;
+      }
+      .checkout-sidebar {
+        width: 100%;
+        right: -100%;
+        padding: 1rem;
+      }
+      .checkout-sidebar.active {
+        right: 0;
+      }
+      .place-order-btn {
+        font-size: 1rem;
+      }
+      .canvas-container {
+        justify-content: flex-start; /* Align to the start for a better scroll experience */
+      }
+    }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
+  <header>
+    <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+    <div class="logo">zentiles</div>
+    <div>
+      <a href="mailto:zentiles@gmail.com" class="email-icon"><i class="fas fa-envelope"></i></a>
+      <a href="#" class="cart-icon" id="cartIcon"><i class="fas fa-shopping-cart"></i></a>
+    </div>
+  </header>
+  <nav class="nav-menu" id="navMenu">
+    <a href="photo-editor.html">Create Art</a>
+    <a href="index.html#gallery">Gallery Walls</a>
+    <a href="index.html#contact">Contact Us</a>
+    <a href="index.html#about">About</a>
+  </nav>
+  <section class="editor-section">
+    <h1>create your gallery wall</h1>
+    <div class="editor-controls">
+      <div class="control-group">
+        <label for="frame">Frame Color</label>
+        <select id="frame" onchange="updateTile()">
+          <option value="oak">Oak Wood</option>
+          <option value="white">White</option>
+          <option value="black">Classic Black</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="size">Size</label>
+        <select id="size" onchange="updateTile()">
+          <option value="8x8">8″ × 8″</option>
+          <option value="8x11">8″ × 11″</option>
+          <option value="12x12">12″ × 12″</option>
+          <option value="12x16">12″ × 16″</option>
+          <option value="20x20">20″ × 20″</option>
+          <option value="20x27">20″ × 27″</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="effect">Effect</label>
+        <select id="effect" onchange="updateTile()">
+          <option value="none">None</option>
+          <option value="sepia">Sepia</option>
+          <option value="grayscale">Grayscale</option>
+          <option value="bright">Bright</option>
+          <option value="contrast">Contrast</option>
+          <option value="blur">Blur</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="border">Border Thickness</label>
+        <input type="range" id="border" min="0" max="20" value="5" oninput="updateTile()">
+      </div>
+    </div>
+    <label class="upload-btn">
+      <input type="file" id="photoUpload" accept="image/*" style="display: none;" onchange="addPhoto()">
+      Add Photo +
+    </label>
+    <div class="canvas-container" id="canvasContainer"></div>
+  </section>
+  <div class="checkout-sidebar" id="checkoutSidebar">
+    <h2>checkout</h2>
+    <span class="close-btn" id="closeCheckout"><i class="fas fa-times"></i></span>
+    <a href="#" class="checkout-btn">Add Address</a>
+    <a href="#" class="checkout-btn">Add Payment Method</a>
+    <div class="order-summary">
+      <p><strong>Tiles:</strong> <span id="tileCount">0</span></p>
+      <p><strong>Subtotal:</strong> <span id="subtotal">0 PHP</span></p>
+      <p><strong>Discount (WELCOME):</strong> <span id="discount">0 PHP</span></p>
+      <p><strong>Shipping:</strong> <span id="shipping">0 PHP</span></p>
+      <p><strong>Grand Total:</strong> <span id="grandTotal">0 PHP</span></p>
+    </div>
+    <a href="#" class="place-order-btn">Place Order</a>
+  </div>
+  <footer>
+    <p>© 2025 zentiles. all rights reserved.</p>
+  </footer>
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    const cartIcon = document.getElementById('cartIcon');
+    const checkoutSidebar = document.getElementById('checkoutSidebar');
+    const closeCheckout = document.getElementById('closeCheckout');
+    const canvasContainer = document.getElementById('canvasContainer');
+    const photoUpload = document.getElementById('photoUpload');
+    let tiles = [];
+    const maxPhotos = 7;
 
-    // Available options for customization
-    const frameColors = ['Oak Wood', 'White', 'Classic Black'];
-    const sizes = [
-      { label: '8″ × 8″', width: 21.35, height: 21.35 },
-      { label: '8″ × 11″', width: 21.35, height: 27.94 },
-      { label: '11″ × 8″', width: 27.94, height: 21.35 },
-      { label: '12″ × 12″', width: 31.6, height: 31.6 },
-      { label: '12″ × 16″', width: 31.6, height: 41.75 },
-      { label: '16″ × 12″', width: 41.75, height: 31.6 },
-      { label: '20″ × 20″', width: 49.53, height: 49.53 },
-      { label: '20″ × 27″', width: 49.53, height: 68.58 },
-      { label: '27″ × 20″', width: 68.58, height: 49.53 },
-    ];
-    const effects = ['none', 'grayscale', 'sepia', 'blur', 'brightness'];
+    // Hamburger Menu
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        navMenu.classList.remove('active');
+      }
+    });
 
-    const PhotoEditor = () => {
-      const [photos, setPhotos] = useState([]);
-      const [showCheckout, setShowCheckout] = useState(false);
-      const canvasRef = useRef(null);
+    // Checkout Sidebar
+    cartIcon.addEventListener('click', (e) => {
+      e.preventDefault();
+      checkoutSidebar.classList.toggle('active');
+    });
+    closeCheckout.addEventListener('click', () => {
+      checkoutSidebar.classList.remove('active');
+    });
 
-      // Handle photo upload
-      const handlePhotoUpload = (e) => {
-        if (photos.length >= 7) return;
-        const file = e.target.files[0];
-        if (file) {
-          const url = URL.createObjectURL(file);
-          setPhotos([...photos, {
-            id: Date.now(),
-            url,
-            frame: 'Oak Wood',
-            size: sizes[0],
-            effect: 'none',
-            border: 2,
-          }]);
-        }
+    // Photo Upload and Tile Management
+    function addPhoto() {
+      if (tiles.length >= maxPhotos) {
+        photoUpload.disabled = true;
+        document.querySelector('.upload-btn').classList.add('disabled');
+        return;
+      }
+      const file = photoUpload.files[0];
+      if (!file) return;
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        const tile = {
+          img,
+          frame: 'oak',
+          size: '8x8',
+          effect: 'none',
+          border: 5
+        };
+        tiles.push(tile);
+        renderTiles();
+        updateCheckout();
       };
+      photoUpload.value = ''; // Reset input
+    }
 
-      // Update photo properties
-      const updatePhoto = (id, property, value) => {
-        setPhotos(photos.map(photo =>
-          photo.id === id ? { ...photo, [property]: value } : photo
-        ));
-      };
+    // Render Tiles
+    function renderTiles() {
+      canvasContainer.innerHTML = '';
+      const containerWidth = canvasContainer.offsetWidth;
+      const totalTiles = tiles.length;
+      const maxWidthPerTile = totalTiles ? (containerWidth - (totalTiles - 1) * 10) / totalTiles : containerWidth;
 
-      // Calculate scale to fit photos horizontally
-      const calculateScale = () => {
-        if (!canvasRef.current || photos.length === 0) return 1;
-        const canvasWidth = canvasRef.current.offsetWidth;
-        const totalWidth = photos.reduce((sum, photo) => sum + photo.size.width + photo.border * 2, 0);
-        return totalWidth > canvasWidth ? canvasWidth / totalWidth : 1;
-      };
+      tiles.forEach((tile, index) => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvasContainer.appendChild(canvas);
 
-      // Checkout calculations
-      const calculateCheckout = () => {
-        const tilePrice = 1000;
-        const totalTiles = photos.length;
-        const subtotal = totalTiles * tilePrice;
-        const isNewCustomer = true; // Assuming new customer for demo
-        const discount = isNewCustomer ? subtotal * 0.25 : 0;
-        const shipping = subtotal >= 2000 ? 0 : 500; // Example shipping fee
-        const grandTotal = subtotal - discount + shipping;
+        // Calculate dimensions
+        const [w, h] = tile.size.split('x').map(Number);
+        const scale = Math.min(maxWidthPerTile / Math.max(w, h), 1);
+        canvas.width = w * 10 * scale;
+        canvas.height = h * 10 * scale;
 
-        return { totalTiles, subtotal, discount, shipping, grandTotal };
-      };
+        // Draw frame
+        ctx.fillStyle = tile.frame === 'oak' ? '#ce9f6f' : tile.frame === 'white' ? '#ffffff' : '#000000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      return (
-        <div className="min-h-screen bg-gray-100 flex flex-col p-4">
-          {/* Header */}
-          <header className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold">Photo Editor</h1>
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              onClick={() => setShowCheckout(true)}
-            >
-              Cart ({photos.length})
-            </button>
-          </header>
+        // Draw border
+        const borderPx = tile.border * scale;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(borderPx, borderPx, canvas.width - 2 * borderPx, canvas.height - 2 * borderPx);
 
-          {/* Photo Upload */}
-          {photos.length < 7 && (
-            <div className="mb-4">
-              <input
-                type="file"
-                accept="image/*"
-                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600"
-                onChange={handlePhotoUpload}
-              />
-            </div>
-          )}
+        // Draw image with effect
+        const imgWidth = canvas.width - 2 * borderPx;
+        const imgHeight = canvas.height - 2 * borderPx;
+        ctx.filter = getFilter(tile.effect);
+        ctx.drawImage(tile.img, borderPx, borderPx, imgWidth, imgHeight);
+        ctx.filter = 'none';
+      });
+    }
 
-          {/* Canvas for Photos */}
-          <div
-            ref={canvasRef}
-            className="flex flex-row gap-2 overflow-x-auto scroll-smooth mb-4"
-            style={{ scrollBehavior: 'smooth' }}
-          >
-            {photos.map(photo => (
-              <div
-                key={photo.id}
-                className="flex-shrink-0"
-                style={{
-                  transform: `scale(${calculateScale()})`,
-                  transition: 'transform 0.3s ease-in-out',
-                }}
-              >
-                <div
-                  className={`p-${photo.border} ${photo.frame === 'Oak Wood' ? 'bg-yellow-700' : photo.frame === 'White' ? 'bg-white' : 'bg-black'} shadow-lg`}
-                >
-                  <img
-                    src={photo.url}
-                    alt="User uploaded"
-                    className={`w-[${photo.size.width}cm] h-[${photo.size.height}cm] object-cover ${photo.effect}`}
-                    style={{
-                      filter: photo.effect === 'grayscale' ? 'grayscale(100%)' :
-                              photo.effect === 'sepia' ? 'sepia(100%)' :
-                              photo.effect === 'blur' ? 'blur(5px)' :
-                              photo.effect === 'brightness' ? 'brightness(150%)' : 'none',
-                      transition: 'all 0.3s ease-in-out',
-                    }}
-                  />
-                </div>
+    // Update Tile on Control Change
+    function updateTile() {
+      const frame = document.getElementById('frame').value;
+      const size = document.getElementById('size').value;
+      const effect = document.getElementById('effect').value;
+      const border = document.getElementById('border').value;
+      if (tiles.length > 0) {
+        tiles[tiles.length - 1] = { ...tiles[tiles.length - 1], frame, size, effect, border: parseInt(border) };
+        renderTiles();
+      }
+      updateCheckout();
+    }
 
-                {/* Customization Controls */}
-                <div className="mt-2 space-y-2">
-                  <div>
-                    <label className="block text-sm font-medium">Frame</label>
-                    <select
-                      className="w-full p-2 border rounded"
-                      value={photo.frame}
-                      onChange={(e) => updatePhoto(photo.id, 'frame', e.target.value)}
-                    >
-                      {frameColors.map(color => (
-                        <option key={color} value={color}>{color}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium">Size</label>
-                    <select
-                      className="w-full p-2 border rounded"
-                      value={photo.size.label}
-                      onChange={(e) => {
-                        const selectedSize = sizes.find(size => size.label === e.target.value);
-                        updatePhoto(photo.id, 'size', selectedSize);
-                      }}
-                    >
-                      {sizes.map(size => (
-                        <option key={size.label} value={size.label}>{size.label}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium">Effect</label>
-                    <select
-                      className="w-full p-2 border rounded"
-                      value={photo.effect}
-                      onChange={(e) => updatePhoto(photo.id, 'effect', e.target.value)}
-                    >
-                      {effects.map(effect => (
-                        <option key={effect} value={effect}>{effect.charAt(0).toUpperCase() + effect.slice(1)}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium">Border Thickness</label>
-                    <input
-                      type="range"
-                      min="1"
-                      max="5"
-                      value={photo.border}
-                      onChange={(e) => updatePhoto(photo.id, 'border', parseInt(e.target.value))}
-                      className="w-full"
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+    // Get Filter for Effects
+    function getFilter(effect) {
+      switch (effect) {
+        case 'sepia': return 'sepia(1)';
+        case 'grayscale': return 'grayscale(1)';
+        case 'bright': return 'brightness(1.5)';
+        case 'contrast': return 'contrast(1.5)';
+        case 'blur': return 'blur(2px)';
+        default: return 'none';
+      }
+    }
 
-          {/* Checkout Pop-up */}
-          {showCheckout && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-end">
-              <div className="bg-white w-full md:w-1/3 p-6 h-full overflow-y-auto">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold">Checkout</h2>
-                  <button
-                    className="text-gray-500 hover:text-gray-700"
-                    onClick={() => setShowCheckout(false)}
-                  >
-                    ✕
-                  </button>
-                </div>
-                <div className="space-y-4">
-                  <button className="w-full bg-gray-200 p-2 rounded hover:bg-gray-300">
-                    Add Address
-                  </button>
-                  <button className="w-full bg-gray-200 p-2 rounded hover:bg-gray-300">
-                    Add Payment Method
-                  </button>
-                  <div>
-                    <h3 className="text-lg font-semibold">Order Summary</h3>
-                    <div className="space-y-2 mt-2">
-                      <p>Total Tiles: {calculateCheckout().totalTiles}</p>
-                      <p>Subtotal: ₱{calculateCheckout().subtotal.toFixed(2)}</p>
-                      <p>Discount (WELCOME): -₱{calculateCheckout().discount.toFixed(2)}</p>
-                      <p>Shipping: ₱{calculateCheckout().shipping.toFixed(2)}</p>
-                      <p className="font-bold">Grand Total: ₱{calculateCheckout().grandTotal.toFixed(2)}</p>
-                    </div>
-                  </div>
-                  <button className="w-full bg-green-500 text-white p-3 rounded hover:bg-green-600">
-                    Place Order
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      );
-    };
+    // Update Checkout Summary
+    function updateCheckout() {
+      const tileCount = tiles.length;
+      const pricePerTile = 1000;
+      const subtotal = tileCount * pricePerTile;
+      const discount = subtotal * 0.25; // WELCOME 25% discount
+      const shipping = subtotal >= 2000 ? 0 : 200;
+      const grandTotal = subtotal - discount + shipping;
 
-    ReactDOM.render(<PhotoEditor />, document.getElementById('root'));
+      document.getElementById('tileCount').textContent = tileCount;
+      document.getElementById('subtotal').textContent = `${subtotal} PHP`;
+      document.getElementById('discount').textContent = `${discount} PHP`;
+      document.getElementById('shipping').textContent = `${shipping} PHP`;
+      document.getElementById('grandTotal').textContent = `${grandTotal} PHP`;
+    }
   </script>
 </body>
 </html>
