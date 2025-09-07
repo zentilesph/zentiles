@@ -2,28 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>zentiles – just stick and snap!</title>
-  
-  <!-- Google Font: Poppins for minimalist lowercase logo -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zentiles – Just Stick and Snap!</title>
 
-  <!-- Font Awesome for social icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <!-- === Font Awesome for Social Icons === -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+  <!-- === Main Styles === -->
   <style>
     /* === Global Styles === */
-    :root {
-      --oak: #ce9f6f; /* Oak wood tone */
-      --black: #000000;
-      --white: #ffffff;
-    }
-
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: var(--white);
-      color: var(--black);
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background-color: #fdf9f3;
+      color: #000;
       line-height: 1.6;
     }
 
@@ -32,75 +25,68 @@
       color: inherit;
     }
 
-    /* === Header & Navigation === */
+    /* === Header and Navigation === */
     header {
       position: fixed;
       top: 0;
-      left: 0;
       width: 100%;
+      background: #000;
+      color: #fff;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      background: var(--white);
+      padding: 0.8rem 1.5rem;
       z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
-    /* Logo Styling */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .logo {
+      height: 50px;
+    }
+
+    .business-name {
       font-size: 2rem;
-      font-weight: 600;
-      color: var(--oak);
       text-transform: lowercase;
-      letter-spacing: 2px;
+      font-weight: bold;
+      color: #c79c68;
     }
 
-    /* Email Icon */
-    .email-icon {
-      font-size: 1.4rem;
-      color: var(--black);
-      transition: color 0.3s ease;
-    }
-    .email-icon:hover {
-      color: var(--oak);
-    }
-
-    /* Hamburger Menu */
+    /* === Hamburger Menu === */
     .hamburger {
       font-size: 1.8rem;
       cursor: pointer;
-      color: var(--black);
     }
 
     .nav-menu {
       position: fixed;
       top: 0;
-      left: -100%;
+      right: -250px;
       width: 250px;
       height: 100%;
-      background: var(--white);
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-      transition: left 0.3s ease;
+      background: #c79c68;
+      color: #000;
       padding-top: 4rem;
-      z-index: 1100;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: right 0.3s ease;
+      z-index: 1001;
     }
 
     .nav-menu.active {
-      left: 0;
+      right: 0;
     }
 
     .nav-menu a {
-      display: block;
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
-      color: var(--black);
-      border-bottom: 1px solid #f0f0f0;
-    }
-
-    .nav-menu a:hover {
-      background: var(--oak);
-      color: var(--white);
+      padding: 0.8rem 1.2rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #000;
     }
 
     /* === Hero Section === */
@@ -108,6 +94,7 @@
       position: relative;
       height: 100vh;
       overflow: hidden;
+      margin-top: 64px; /* height of header */
     }
 
     .hero video {
@@ -122,266 +109,380 @@
 
     .hero-content {
       position: relative;
+      color: #fff;
       text-align: center;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--white);
-      background: rgba(0, 0, 0, 0.4);
-      padding: 2rem;
-      border-radius: 12px;
-      max-width: 90%;
-      margin: auto;
     }
 
     .hero-content h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       text-transform: lowercase;
-      margin-bottom: 1rem;
     }
 
-    /* Catchy motto */
-    .hero-content p.motto {
-      font-size: 1.4rem;
-      margin-bottom: 1.5rem;
-      color: var(--oak);
-      font-weight: 400;
+    .motto {
+      font-size: 1.2rem;
+      margin: 1rem 0;
+      color: #c79c68;
     }
 
     .cta-btn {
-      display: inline-block;
-      background: var(--oak);
-      color: var(--white);
-      padding: 0.8rem 2rem;
-      border-radius: 6px;
+      background: #c79c68;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
       font-size: 1.2rem;
+      font-weight: bold;
       transition: background 0.3s ease;
     }
 
     .cta-btn:hover {
-      background: var(--black);
+      background: #a8793e;
     }
 
-    /* === Split Video Sections === */
+    /* === Split Sections === */
     .split-section {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      padding: 4rem 2rem;
-      gap: 2rem;
+      margin: 4rem auto;
+      max-width: 1200px;
+      padding: 2rem;
+      gap: 1.5rem;
     }
 
     .split-section video {
-      flex: 1;
-      max-width: 500px;
+      flex: 1 1 45%;
+      max-width: 100%;
       border-radius: 10px;
     }
 
     .split-section .text {
-      flex: 1;
+      flex: 1 1 45%;
       font-size: 1.8rem;
-      font-weight: 500;
-      color: var(--black);
+      font-weight: bold;
+      color: #000;
     }
 
-    /* Alternate video/text layout */
-    .split-section:nth-child(even) {
-      flex-direction: row-reverse;
+    /* === FAQ Section === */
+    .faq-section {
+      max-width: 900px;
+      margin: 4rem auto;
+      padding: 2rem;
+      background: #fdf9f3;
+      border-radius: 12px;
+    }
+
+    .faq-section h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #000;
+      margin-bottom: 2rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #c79c68;
+      padding: 1rem 0;
+    }
+
+    .faq-question {
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+      padding: 0.5rem;
+      position: relative;
+    }
+
+    .faq-question::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      font-size: 1.5rem;
+      color: #c79c68;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-question.active::after {
+      content: '-';
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      padding-left: 0.5rem;
+    }
+
+    .faq-answer p,
+    .faq-answer ul {
+      color: #333;
+      font-size: 1rem;
+      line-height: 1.6;
     }
 
     /* === Social Media Section === */
     .social-section {
       text-align: center;
-      padding: 3rem 1rem;
-      background: #fdf9f3;
-    }
-
-    .social-section h2 {
-      font-size: 2rem;
-      color: var(--oak);
-      margin-bottom: 1rem;
-      text-transform: lowercase;
-    }
-
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      font-size: 2rem;
-      margin-top: 1rem;
+      margin: 3rem 0;
     }
 
     .social-icons a {
-      color: var(--black);
+      margin: 0 15px;
+      font-size: 2rem;
+      color: #c79c68;
       transition: color 0.3s ease;
     }
 
     .social-icons a:hover {
-      color: var(--oak);
-    }
-
-    .social-icons p {
-      font-size: 0.9rem;
-      margin-top: 0.3rem;
+      color: #000;
     }
 
     /* === Contact Form === */
-    .contact-section {
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-
-    .contact-section h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      text-transform: lowercase;
-      color: var(--oak);
-    }
-
     form {
       max-width: 500px;
-      margin: auto;
-      background: #fdf9f3;
+      margin: 0 auto 2rem auto;
       padding: 1.5rem;
-      border-radius: 10px;
-      border: 1px solid var(--oak);
+      border: 1px solid #c79c68;
+      border-radius: 8px;
+      background: #fff;
     }
 
     label {
       display: block;
-      margin: 0.5rem 0 0.3rem;
-      font-weight: 500;
-      color: var(--black);
+      margin-bottom: 0.3rem;
+      font-weight: bold;
+      color: #000;
     }
 
     input, select, textarea {
       width: 100%;
-      padding: 0.7rem;
+      padding: 0.5rem;
       margin-bottom: 1rem;
-      border: 1px solid var(--oak);
-      border-radius: 6px;
+      border: 1px solid #c79c68;
+      border-radius: 4px;
       font-size: 1rem;
     }
 
-    button {
-      background: var(--oak);
-      color: var(--white);
+    button[type="submit"] {
+      background: #c79c68;
+      color: white;
       border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 6px;
+      padding: 0.7rem 1.5rem;
       font-size: 1.2rem;
+      border-radius: 5px;
       cursor: pointer;
     }
 
-    button:hover {
-      background: var(--black);
+    button[type="submit"]:hover {
+      background: #a8793e;
     }
 
     /* === Footer === */
     footer {
       text-align: center;
       padding: 1rem;
-      background: var(--white);
-      color: var(--black);
-      border-top: 1px solid #ddd;
+      background: #000;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    /* === Mobile Responsive === */
+    @media (max-width: 768px) {
+      .split-section {
+        flex-direction: column;
+      }
+
+      .hero-content h1 {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
 <body>
   <!-- === Header === -->
   <header>
+    <div class="logo-container">
+      <img src="assets/images/zentiles-logo.png" alt="Zentiles Logo" class="logo">
+      <span class="business-name">zentiles</span>
+    </div>
     <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-    <div class="logo">zentiles</div>
-    <a href="mailto:zentiles@gmail.com" class="email-icon"><i class="fas fa-envelope"></i></a>
+    <nav class="nav-menu" id="navMenu">
+      <a href="photo-editor.html">Create Art</a>
+      <a href="#faq">FAQs</a>
+      <a href="#contact">Contact Us</a>
+      <a href="#about">About</a>
+    </nav>
   </header>
-  <!-- --- End Header --- -->
 
-  <!-- === Hamburger Navigation Menu === -->
-  <nav class="nav-menu" id="navMenu">
-    <a href="photo-editor.html">Create Art</a>
-    <a href="#gallery">Gallery Walls</a>
-    <a href="#contact">Contact Us</a>
-    <a href="#about">About</a>
-  </nav>
-  <!-- --- End Navigation Menu --- -->
+  <!-- === Hero Section === -->
+  <section class="hero">
+    <video src="assets/video/demo-apply.mp4" autoplay muted loop playsinline preload="auto"></video>
+    <div class="hero-content">
+      <h1>create memories with zentiles</h1>
+      <p class="motto">your walls, your unique story</p>
+      <a href="photo-editor.html" class="cta-btn">create art</a>
+    </div>
+  </section>
 
-<!-- === Hero Section === -->
-<section class="hero">
-  <video src="assets/video/demo-apply.mp4" autoplay muted loop playsinline preload="auto"></video>
-  <div class="hero-content">
-    <h1>create memories with zentiles</h1>
-    <p class="motto">your walls, your unique story</p>
-    <a href="photo-editor.html" class="cta-btn">create art</a>
-  </div>
-</section>
-<!-- --- End Hero Section --- -->
-
-  <!-- === Split Section 1 (Hero BG video moved here) === -->
-<section class="split-section">
-  <video src="assets/video/hero-bg.mp4" autoplay muted loop playsinline></video>
-  <div class="text">stick, snap, and style with ease</div>
-</section>
+  <!-- === Split Section 1 === -->
+  <section class="split-section">
+    <video src="assets/video/hero-bg.mp4" autoplay muted loop playsinline></video>
+    <div class="text">stick, snap, and style with ease</div>
+  </section>
 
   <!-- === Split Section 2 === -->
   <section class="split-section">
     <video src="assets/video/demo-room.mp4" autoplay muted loop playsinline></video>
     <div class="text">magnetic & sticky tiles, effortlessly chic</div>
   </section>
-  <!-- --- End Split Sections --- -->
+
+  <!-- === FAQ Section === -->
+  <section id="faq" class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <button class="faq-question">How big are the tiles?</button>
+      <div class="faq-answer">
+        <p>Available sizes include:</p>
+        <ul>
+          <li>8" × 8" (21.35 × 21.35 cm)</li>
+          <li>12" × 12" (31.6 × 31.6 cm)</li>
+          <li>12" × 16" or 16" × 12" (31.6 × 41.75 cm)</li>
+          <li>20" × 20" (49.53 × 49.53 cm)</li>
+        </ul>
+        <p><strong>Note:</strong> Available only within the Philippines.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">How long does shipping take?</button>
+      <div class="faq-answer">
+        <p>Orders are delivered within <strong>7-10 business days</strong> anywhere in the Philippines.</p>
+        <p><strong>Standard shipping:</strong> ₱0 for orders above ₱2,000.<br>
+           <strong>Express shipping:</strong> Calculated at checkout.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">Can the tiles be reused?</button>
+      <div class="faq-answer">
+        <p>Yes! Our tiles are reusable and leave no damage on walls. Stick, snap, and reposition as needed.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">Do you ship internationally?</button>
+      <div class="faq-answer">
+        <p>Currently, Zentiles ships <strong>only within the Philippines</strong>.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">What if I'm unhappy with my order?</button>
+      <div class="faq-answer">
+        <p>If you’re unhappy with your order, contact us and we’ll replace any damaged or defective tiles at no cost.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- === Social Media Section === -->
   <section class="social-section">
-    <h2>follow us</h2>
+    <h2>Follow Us @zentilesph</h2>
     <div class="social-icons">
-      <a href="#" target="_blank"><i class="fab fa-instagram"></i><p>@zentilesph</p></a>
-      <a href="#" target="_blank"><i class="fab fa-facebook"></i><p>@zentilesph</p></a>
-      <a href="#" target="_blank"><i class="fab fa-tiktok"></i><p>@zentilesph</p></a>
-      <a href="#" target="_blank"><i class="fab fa-x-twitter"></i><p>@zentilesph</p></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="#"><i class="fab fa-x-twitter"></i></a>
     </div>
   </section>
-  <!-- --- End Social Media Section --- -->
 
-  <!-- === Contact Form Section === -->
-  <section class="contact-section" id="contact">
-    <h2>contact us</h2>
+  <!-- === Contact Section === -->
+  <section id="contact" class="container">
+    <h2>Contact Us</h2>
     <form action="https://formspree.io/f/meolvqab" method="POST">
-      <label for="name">full name</label>
-      <input id="name" name="name" type="text" placeholder="your full name" required />
+      <label for="name">Full Name</label>
+      <input id="name" name="name" type="text" placeholder="Your full name" required />
 
-      <label for="email">email address</label>
+      <label for="email">Email Address</label>
       <input id="email" name="_replyto" type="email" placeholder="your.email@example.com" required />
 
-      <label for="message">message</label>
-      <textarea id="message" name="message" rows="4" placeholder="how can we help you?"></textarea>
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="How can we help you?" rows="4"></textarea>
 
-      <button type="submit">send message</button>
+      <button type="submit">Send Message</button>
     </form>
   </section>
-  <!-- --- End Contact Form Section --- -->
 
   <!-- === Footer === -->
   <footer>
-    <p>© 2025 zentiles. all rights reserved.</p>
+    <p>© 2025 Zentiles. All rights reserved.</p>
   </footer>
-  <!-- --- End Footer --- -->
 
-  <!-- === JavaScript: Hamburger Menu Auto-Close === -->
+  <!-- === Scripts === -->
   <script>
+    // === Hamburger Menu Toggle ===
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');
 
-    // Open menu
     hamburger.addEventListener('click', () => {
       navMenu.classList.toggle('active');
     });
 
-    // Close when clicking outside
+    // Close hamburger when clicking outside
     document.addEventListener('click', (e) => {
       if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
         navMenu.classList.remove('active');
       }
     });
+
+    // === FAQ Toggle Functionality ===
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+
+        faqQuestions.forEach(q => {
+          if (q !== question) {
+            q.classList.remove('active');
+            q.nextElementSibling.style.maxHeight = null;
+          }
+        });
+
+        question.classList.toggle('active');
+        if (answer.style.maxHeight) {
+          answer.style.maxHeight = null;
+        } else {
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // === Contact Form Submission Redirect ===
+    const form = document.querySelector('form');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        form.reset();
+        window.location.href = 'thankyou.html'; // Redirect to Thank You page
+      } else {
+        alert('Oops! There was a problem submitting your form.');
+      }
+    });
   </script>
-  <!-- --- End JavaScript --- -->
 </body>
 </html>
-
