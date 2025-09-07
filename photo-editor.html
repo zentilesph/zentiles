@@ -1,321 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zentiles — Photo Editor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <style>
-    :root{
-      --oak: #ce9f6f;
-      --black:#000;
-      --white:#fff;
-      --bg:#fdf9f3;
-      --gap: 16px;
-      --frame-thickness: 16px;
-      --shadow: 0 6px 18px rgba(0,0,0,.08);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:'Poppins',sans-serif;
-      background:var(--bg);
-      color:#111;
-      overflow-x:hidden;
-    }
+<!-- ... existing HTML code ... -->
 
-    /* Top bar */
-    .top-nav {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 60px;
-      background: var(--white);
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
-    .logo { font-size: 1.6rem; font-weight: 600; color: var(--oak); text-transform: lowercase; letter-spacing: 1px; }
-    .top-nav .nav-left,.top-nav .nav-right{ display:flex; align-items:center; gap:1rem; }
-    .top-nav button,.top-nav .icon-btn{
-      background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--black);
-      transition: transform .3s ease, color .3s ease;
-    }
-    .top-nav button:hover,.top-nav .icon-btn:hover{ color:var(--oak); transform:scale(1.1); }
-
-    header{
-      margin-top: 60px; background:var(--white); color:var(--oak); text-transform:lowercase; font-weight:600;
-      text-align:center; padding:1rem 2rem; box-shadow:0 2px 8px rgba(0,0,0,.08);
-    }
-
-    /* Gallery row */
-    .gallery-wrap{ display:flex; justify-content:center; padding:24px; }
-    .gallery{ display:flex; gap:var(--gap); transform-origin:top center; transition:transform .2s ease; }
-
-    /* Tile */
-    .tile{
-      position:relative;
-      flex:0 0 auto; background:var(--white); border:1px solid #eadccf; border-radius:12px;
-      padding:12px; box-shadow:var(--shadow); width:max-content;
-      transition: transform .3s ease, box-shadow .3s ease;
-    }
-    .tile:hover{ transform: translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.15); }
-    .tile .remove-tile{
-      position:absolute; top:8px; right:8px;
-      background:#fff; border:1px solid #e5d8cc; border-radius:8px; font-size:.8rem; padding:4px 8px; cursor:pointer;
-    }
-
-    /* Visual frame */
-    .frame-outer{
-      position:relative; padding:var(--frame-thickness); border-radius:0;
-      background:#c79767;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.2);
-      margin:0 auto 12px; transition: background .2s ease, width .2s ease, height .2s ease, padding .2s ease;
-      width:200px; height:200px; display:flex; align-items:center; justify-content:center;
-    }
-    .frame-oak{
-      background: repeating-linear-gradient(90deg,#b98958 0 6px,#c79767 6px 12px,#b37e4f 12px 18px,#c08f5d 18px 24px);
-      filter:saturate(0.9) brightness(0.98);
-    }
-    .frame-white{ background:#f8f8f8; }
-    .frame-black{ background:#111; }
-
-    /* Mat + Image */
-    .mat{ background:#fff; width:100%; height:100%; padding:10px; border-radius:0; transition:padding .15s ease; display:flex; align-items:center; justify-content:center; }
-    .mat img{ display:block; max-width:100%; max-height:100%; border-radius:0; transition:filter .2s ease; }
-
-    /* Controls */
-    .controls{ display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:center; font-size:.9rem; }
-    .controls .label{ grid-column:1 / -1; font-size:.8rem; color:var(--oak); font-weight:600; margin-top:2px; }
-
-    .frames{ display:flex; gap:8px; grid-column:1 / -1; }
-    .frame-thumb{
-      width:44px; height:44px; border-radius:8px; cursor:pointer; border:2px solid transparent;
-      box-shadow:inset 0 2px 6px rgba(0,0,0,.25), 0 2px 6px rgba(0,0,0,.08);
-      transition:transform .2s ease, border-color .2s ease;
-    }
-    .frame-thumb:hover{ transform:scale(1.08); }
-    .frame-thumb.selected{ border-color:var(--oak); }
-    .thumb-oak{
-      background:repeating-linear-gradient(90deg,#b98958 0 6px,#c79767 6px 12px,#b37e4f 12px 18px,#c08f5d 18px 24px);
-    }
-    .thumb-white{ background:#f8f8f8; }
-    .thumb-black{ background:#111; }
-
-    select,input[type="range"]{
-      width:100%; padding:.45rem .55rem; border:1px solid #d9c7b6; border-radius:8px; background:#fff; font-family:inherit; transition:border-color .2s ease;
-    }
-    select:hover,input[type="range"]:hover{ border-color:var(--oak); }
-
-    .hint{ text-align:center; color:#8a7765; font-size:.85rem; margin:6px 0 -2px; }
-
-    /* "+" button */
-    .fab{
-      position:fixed; right:22px; bottom:22px; width:64px; height:64px; border-radius:50%;
-      background:var(--oak); color:#fff; border:none; display:flex; align-items:center; justify-content:center;
-      font-size:1.6rem; cursor:pointer; box-shadow:0 10px 24px rgba(0,0,0,.22);
-      transition:background .3s ease, transform .2s ease, opacity .3s ease; z-index:1200;
-    }
-    .fab:hover{ background:#000; transform:scale(1.1); }
-    .fab:active{ transform:scale(.95); }
-    .fab.hidden{ opacity:0; pointer-events:none; transform:scale(.9); }
-    input[type="file"]{ display:none; }
-
-    /* Checkout Sidebar */
-    .checkout-sidebar{
-      position:fixed; top:0; right:-400px; width:360px; height:100%; background:#fff;
-      box-shadow:-4px 0 12px rgba(0,0,0,0.12); transition:right .35s ease; z-index:2000; display:flex; flex-direction:column;
-    }
-    .checkout-sidebar.active{ right:0; }
-    .checkout-header{ display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--oak); color:#fff; }
-    .checkout-header h2{ margin:0; font-size:1.1rem; letter-spacing:.3px; }
-    .checkout-header button{ background:none; border:none; color:#fff; font-size:1.4rem; cursor:pointer; }
-    .checkout-body{ padding:16px; flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:12px; }
-    .checkout-section button{
-      width:100%; padding:.7rem; background:var(--oak); color:#fff; border:none; border-radius:8px; cursor:pointer; font-size:1rem;
-    }
-    .checkout-section button:hover{ background:#000; }
-    .summary{ background:#fdf9f3; padding:12px; border-radius:8px; }
-    .summary p{ display:flex; justify-content:space-between; margin:8px 0; }
-    .checkout-footer{ padding:16px; border-top:1px solid #eee; }
-    .checkout-footer button{
-      width:100%; padding:0.95rem; font-size:1.05rem; background:var(--oak); color:#fff; border:none; border-radius:8px; cursor:pointer;
-    }
-    .checkout-footer button:hover{ background:#000; }
-  </style>
-</head>
-<body>
-  <!-- Top Navigation -->
-  <div class="top-nav">
-    <div class="nav-left">
-      <button onclick="window.location.href='index.html'" title="Home"><i class="fas fa-home"></i></button>
-    </div>
-    <div class="logo">zentiles</div>
-    <div class="nav-right">
-      <button id="cartBtn" class="icon-btn" title="Cart"><i class="fas fa-shopping-cart"></i></button>
-    </div>
+<!-- Add checkout pop-up -->
+<div class="checkout-popup" id="checkoutPopup">
+  <div class="popup-header">
+    <h2>Checkout</h2>
+    <button class="close-btn" id="closeCheckoutBtn">&times;</button>
   </div>
-
-  <header>create your gallery wall</header>
-
-  <div class="gallery-wrap">
-    <div class="gallery" id="gallery" aria-live="polite"></div>
+  <div class="popup-content">
+    <div class="customer-info">
+      <button class="add-address-btn">Add Address</button>
+      <button class="add-payment-btn">Add Payment Method</button>
+    </div>
+    <div class="order-summary">
+      <h3>Order Summary</h3>
+      <p>Total Tiles: <span id="totalTiles">0</span></p>
+      <p>Subtotal: <span id="subtotal">0 PHP</span></p>
+      <p>Discount: <span id="discount">0 PHP</span></p>
+      <p>Shipping: <span id="shipping">0 PHP</span></p>
+      <p>Grand Total: <span id="grandTotal">0 PHP</span></p>
+    </div>
+    <button class="place-order-btn">Place Order</button>
   </div>
+</div>
 
-  <!-- Floating "+" -->
-  <button id="addBtn" class="fab" aria-label="Add photo"><i class="fas fa-plus"></i></button>
-  <input id="fileInput" type="file" accept="image/*" />
+<!-- ... existing script code ... -->
 
-  <!-- Checkout Sidebar -->
-  <div class="checkout-sidebar" id="checkoutSidebar" aria-hidden="true">
-    <div class="checkout-header">
-      <h2>Checkout</h2>
-      <button id="closeSidebar" aria-label="Close checkout"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="checkout-body">
-      <div class="checkout-section">
-        <button type="button">Add Address</button>
-        <button type="button">Add Payment Method</button>
-      </div>
-      <div class="summary">
-        <p><span>Tiles</span> <span id="tileCount">0</span></p>
-        <p><span>Subtotal</span> <span id="subtotal">₱0</span></p>
-        <p><span>Discount (WELCOME 25%)</span> <span id="discount">-₱0</span></p>
-        <p><span>Shipping</span> <span id="shipping">₱0</span></p>
-        <hr>
-        <p><strong>Total</strong> <strong id="total">₱0</strong></p>
-      </div>
-    </div>
-    <div class="checkout-footer">
-      <button type="button">Place Order</button>
-    </div>
-  </div>
+// Add event listener for cart icon
+const cartIcon = document.getElementById('cartIcon');
+const checkoutPopup = document.getElementById('checkoutPopup');
+const closeCheckoutBtn = document.getElementById('closeCheckoutBtn');
 
-  <script>
-    /* ===== Constants ===== */
-    const MAX_PHOTOS = 7;
-    const TILE_PRICE = 1000;
-    const DISCOUNT_RATE = 0.25;                 
-    const FREE_SHIPPING_THRESHOLD = 2000;
-    const SHIPPING_FEE = 150;
-    const IS_NEW_CUSTOMER = true;
+cartIcon.addEventListener('click', () => {
+  checkoutPopup.classList.add('active');
+});
 
-    const SIZE_MAP = {
-      "8x8":   { w: 160, h: 160, label:'8″ × 8″' },
-      "8x11":  { w: 160, h: 220, label:'8″ × 11″' },
-      "11x8":  { w: 220, h: 160, label:'11″ × 8″' },
-      "12x12": { w: 200, h: 200, label:'12″ × 12″' },
-      "12x16": { w: 200, h: 266, label:'12″ × 16″' },
-      "16x12": { w: 266, h: 200, label:'16″ × 12″' },
-      "20x20": { w: 300, h: 300, label:'20″ × 20″' },
-      "20x27": { w: 300, h: 405, label:'20″ × 27″' },
-      "27x20": { w: 405, h: 300, label:'27″ × 20″' },
-    };
+closeCheckoutBtn.addEventListener('click', () => {
+  checkoutPopup.classList.remove('active');
+});
 
-    const EFFECTS = [
-      { name: "Original", value: "none" },
-      { name: "Black & White", value: "grayscale(100%)" },
-      { name: "Sepia", value: "sepia(100%)" },
-      { name: "Vivid", value: "contrast(1.25) saturate(1.25)" },
-      { name: "Warm", value: "brightness(1.08) hue-rotate(18deg) saturate(1.1)" },
-    ];
+// Calculate order summary
+function calculateOrderSummary() {
+  const totalTiles = gallery.children.length;
+  const subtotal = totalTiles * 1000;
+  const discount = subtotal >= 2000 ? subtotal * 0.25 : 0;
+  const shipping = subtotal >= 2000 ? 0 : 200; // standard shipping fee
+  const grandTotal = subtotal - discount + shipping;
 
-    /* ===== Elements ===== */
-    const gallery = document.getElementById('gallery');
-    const addBtn = document.getElementById('addBtn');
-    const fileInput = document.getElementById('fileInput');
-    const cartBtn = document.getElementById('cartBtn');
-    const checkoutSidebar = document.getElementById('checkoutSidebar');
-    const closeSidebar = document.getElementById('closeSidebar');
+  document.getElementById('totalTiles').textContent = totalTiles;
+  document.getElementById('subtotal').textContent = `${subtotal} PHP`;
+  document.getElementById('discount').textContent = `${discount} PHP`;
+  document.getElementById('shipping').textContent = `${shipping} PHP`;
+  document.getElementById('grandTotal').textContent = `${grandTotal} PHP`;
+}
 
-    const tileCountEl = document.getElementById('tileCount');
-    const subtotalEl = document.getElementById('subtotal');
-    const discountEl = document.getElementById('discount');
-    const shippingEl = document.getElementById('shipping');
-    const totalEl = document.getElementById('total');
+// Apply WELCOME code for new customers
+function applyWelcomeCode() {
+  const subtotalElement = document.getElementById('subtotal');
+  const subtotal = parseInt(subtotalElement.textContent.replace(' PHP', ''));
+  const discount = subtotal * 0.25;
+  document.getElementById('discount').textContent = `${discount} PHP`;
+  const grandTotal = subtotal - discount;
+  document.getElementById('grandTotal').textContent = `${grandTotal} PHP`;
+}
 
-    /* ===== Checkout open/close ===== */
-    cartBtn.addEventListener('click', () => {
-      checkoutSidebar.classList.add('active');
-      checkoutSidebar.setAttribute('aria-hidden', 'false');
-      updateCheckoutSummary();
-    });
-
-    closeSidebar.addEventListener('click', () => {
-      checkoutSidebar.classList.remove('active');
-      checkoutSidebar.setAttribute('aria-hidden', 'true');
-    });
-
-    /* ===== Add Photo ===== */
-    addBtn.addEventListener('click', () => {
-      if (gallery.children.length >= MAX_PHOTOS) return;
-      fileInput.click();
-    });
-
-    fileInput.addEventListener('change', (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-      if (gallery.children.length >= MAX_PHOTOS) return;
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        createTile(reader.result);
-        if (gallery.children.length >= MAX_PHOTOS) addBtn.classList.add('hidden');
-        fitGallery();
-        updateCheckoutSummary();
-      };
-      reader.readAsDataURL(file);
-      e.target.value = '';
-    });
-
-    /* ===== Create Tile (with full live controls) ===== */
-    function createTile(src){
-      const tile = document.createElement('div');
-      tile.className = 'tile';
-
-      const defaultKey = '12x12';
-      const { w, h } = SIZE_MAP[defaultKey];
-
-      tile.innerHTML = `
-        <button class="remove-tile" type="button">🗑 Remove</button>
-        <div class="frame-outer frame-oak" data-frame="oak" style="width:${w}px; height:${h}px;">
-          <div class="mat" style="padding:10px;">
-            <img src="${src}" alt="Uploaded photo">
-          </div>
-        </div>
-
-        <div class="controls">
-          <div class="label">Frame</div>
-          <div class="frames">
-            <button class="frame-thumb thumb-oak selected" data-frame="oak" title="Oak Wood"></button>
-            <button class="frame-thumb thumb-white" data-frame="white" title="White"></button>
-            <button class="frame-thumb thumb-black" data-frame="black" title="Classic Black"></button>
-          </div>
-
-          <div class="label">Size</div>
-          <select class="size" aria-label="Select size">
-            ${Object.entries(SIZE_MAP).map(([k,v]) =>
-              `<option value="${k}" ${k===defaultKey?'selected':''}>${v.label}</option>`
-            ).join('')}
-          </select>
-
-          <div class="label">Effect</div>
-          <select class="effect" aria-label="Select effect">
-            ${EFFECTS.map(f => `<option value="${f.value}">${f.name}</option>`).join('')}
-          </select>
-
-          <div class="label">Border (white)</div>
-          <input class="border" type="range" min="0" max="50" value="10" aria-label="Adjust white border thickness" />
-        </div>
-        <div class="hint">oak wood • white • classic black</div>
-      `;
-
-      gallery.appendChild(tile);
-
-      const frameOuter = tile.querySelector('.frame-outer');
-      const mat = tile.querySelector('.mat');
-      const img = tile.querySelector('img');
-
-      // Remove tile
-      tile.querySelector('.remove-tile').addEventListener('click', () => {
-        tile
+// Call calculateOrderSummary and applyWelcomeCode when a photo is added
+photoUpload.addEventListener('change', (event) => {
+  // ... existing code ...
+  calculateOrderSummary();
+  applyWelcomeCode();
+});
