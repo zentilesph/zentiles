@@ -1,96 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zentiles – Just Stick and Snap!</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zentiles | Create Memories</title>
+  <link rel="stylesheet" href="styles.css">
 
-  <!-- === Font Awesome for Social Icons === -->
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- === Google Fonts === -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  
-  <!-- === Main Styles === -->
   <style>
-    /* // === GLOBAL STYLES === */
+    /* === General Reset === */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
       background-color: #fdf9f3;
       color: #000;
-      line-height: 1.6;
     }
 
     a {
       text-decoration: none;
       color: inherit;
     }
-    /* --- End GLOBAL STYLES --- */
 
-    /* // === FLOATING ELEMENTS OVER HERO === */
-    .top-left-float {
+    /* === Header & Navigation === */
+    header {
       position: fixed;
-      top: 20px;
-      left: 20px;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
       z-index: 1000;
     }
 
-    .top-right-float {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
-    /* --- End FLOATING ELEMENTS OVER HERO --- */
-
-    /* // === HAMBURGER MENU === */
+    /* Hamburger Menu */
     .hamburger {
       font-size: 1.8rem;
       cursor: pointer;
-      color: #fff;
+      color: #000;
     }
 
-    .nav-menu {
+    .menu {
       position: fixed;
       top: 0;
       left: -250px;
-      width: 250px;
       height: 100%;
-      background: rgba(107, 66, 38, 0.9); /* Transparent oak */
-      backdrop-filter: blur(10px);
+      width: 250px;
+      background: rgba(0, 0, 0, 0.9);
       color: #fff;
-      padding-top: 4rem;
+      padding: 2rem;
+      transition: left 0.3s ease;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-      transition: left 0.3s ease;
-      z-index: 1001;
     }
 
-    .nav-menu.active {
+    .menu.open {
       left: 0;
     }
 
-    .nav-menu a {
-      padding: 0.8rem 1.2rem;
+    .menu a {
       font-size: 1.2rem;
-      font-weight: bold;
-      color: #fff;
-      transition: background 0.3s ease;
+      color: #c79c68;
     }
 
-    .nav-menu a:hover {
-      background: rgba(255, 255, 255, 0.2);
+    /* Email Icon */
+    .email-icon {
+      font-size: 1.5rem;
+      color: #000;
     }
-    /* --- End HAMBURGER MENU --- */
 
-    /* // === HERO SECTION === */
+    /* Business Name Floating */
+    .brand-name {
+      position: absolute;
+      top: 1rem;
+      right: 2rem;
+      font-size: 1.8rem;
+      text-transform: lowercase;
+      font-weight: 700;
+      color: #000;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    /* === Hero Section === */
     .hero {
       position: relative;
       height: 100vh;
@@ -107,102 +107,88 @@
       z-index: -1;
     }
 
-    .business-name {
-      font-size: 2rem;
-      text-transform: lowercase;
-      font-weight: bold;
-      color: #6B4226;
-      text-shadow: 0 0 5px rgba(0,0,0,0.5);
-    }
-    
     .hero-content {
-      position: relative;
-      color: #fff;
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
       text-align: center;
-      top: 50%;
-      transform: translateY(-50%);
+      color: #fff;
     }
 
     .hero-content h1 {
-      font-size: 2.5rem;
-      text-transform: lowercase;
+      font-size: 2.8rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
     }
 
-    .motto {
+    .hero-content p {
       font-size: 1.2rem;
-      margin: 1rem 0;
-      color: #fff;
-      text-shadow: 0 0 5px #000;
+      margin-bottom: 1rem;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
     }
 
     .cta-btn {
-      background: rgba(0,0,0,0.3);
+      background: transparent;
+      border: 2px solid #fff;
       color: #fff;
-      border: 2px solid #6B4226;
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
+      padding: 0.8rem 2rem;
       font-size: 1.2rem;
-      font-weight: bold;
-      transition: background 0.3s ease, color 0.3s ease;
-      backdrop-filter: blur(5px);
+      border-radius: 30px;
+      transition: background 0.3s ease;
+      cursor: pointer;
     }
 
     .cta-btn:hover {
-      background: #6B4226;
-      color: #fff;
+      background: #c79c68;
+      color: #000;
     }
-    /* --- End HERO SECTION --- */
 
-    /* // === SPLIT SECTIONS === */
+    /* === Split Sections === */
     .split-section {
       display: flex;
-      flex-wrap: wrap;
+      height: 100vh;
+    }
+
+    .split-video,
+    .split-text {
+      width: 50%;
+      display: flex;
+      justify-content: center;
       align-items: center;
-      margin: 4rem auto;
-      max-width: 1200px;
       padding: 2rem;
-      gap: 1.5rem;
     }
 
-    .split-section video {
-      flex: 1 1 45%;
-      max-width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    .split-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .split-section .text {
-      flex: 1 1 45%;
-      font-size: 1.8rem;
-      font-weight: bold;
+    .split-text {
+      background: #fdf9f3;
+      font-size: 1.5rem;
       color: #000;
-      text-align: center;
     }
 
-    .reverse-layout {
-      flex-direction: row-reverse;
-    }
-    /* --- End SPLIT SECTIONS --- */
-
-    /* // === FAQ SECTION === */
+    /* === FAQ Section === */
     .faq-section {
       max-width: 900px;
       margin: 4rem auto;
       padding: 2rem;
-      background: #fff;
+      background: #fdf9f3;
       border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
     .faq-section h2 {
       text-align: center;
       font-size: 2rem;
-      color: #000;
       margin-bottom: 2rem;
+      color: #000;
     }
 
     .faq-item {
-      border-bottom: 1px solid #6B4226;
+      border-bottom: 1px solid #c79c68;
       padding: 1rem 0;
     }
 
@@ -217,11 +203,6 @@
       cursor: pointer;
       padding: 0.5rem;
       position: relative;
-      transition: color 0.2s ease;
-    }
-
-    .faq-question:hover {
-      color: #6B4226;
     }
 
     .faq-question::after {
@@ -229,7 +210,7 @@
       position: absolute;
       right: 0;
       font-size: 1.5rem;
-      color: #6B4226;
+      color: #c79c68;
       transition: transform 0.3s ease;
     }
 
@@ -245,283 +226,166 @@
       padding-left: 0.5rem;
     }
 
-    .faq-answer p,
-    .faq-answer ul {
-      color: #333;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-    /* --- End FAQ SECTION --- */
-
-    /* // === SOCIAL MEDIA SECTION === */
-    .social-section {
-      text-align: center;
-      margin: 3rem 0;
-    }
-
-    .social-icons a {
-      margin: 0 15px;
-      font-size: 2rem;
-      color: #6B4226;
-      transition: color 0.3s ease;
-    }
-
-    .social-icons a:hover {
-      color: #000;
-    }
-    /* --- End SOCIAL MEDIA SECTION --- */
-
-    /* // === CONTACT FORM === */
-    form {
-      max-width: 500px;
-      margin: 0 auto 2rem auto;
-      padding: 1.5rem;
-      border: 1px solid #6B4226;
-      border-radius: 8px;
+    /* === Contact Section === */
+    .contact-section {
+      max-width: 600px;
+      margin: 3rem auto;
+      padding: 2rem;
       background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(5px);
+      border: 1px solid #c79c68;
+      border-radius: 10px;
     }
 
-    label {
-      display: block;
-      margin-bottom: 0.3rem;
-      font-weight: bold;
+    .contact-section h2 {
+      text-align: center;
+      margin-bottom: 1rem;
       color: #000;
     }
 
-    input, select, textarea {
+    form input,
+    form textarea {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.8rem;
       margin-bottom: 1rem;
-      border: 1px solid #6B4226;
-      border-radius: 4px;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.5);
-    }
-
-    button[type="submit"] {
-      background: rgba(0,0,0,0.3);
-      color: #fff;
-      border: 2px solid #6B4226;
-      padding: 0.7rem 1.5rem;
-      font-size: 1.2rem;
+      border: 1px solid #c79c68;
       border-radius: 5px;
+    }
+
+    form button {
+      background: #c79c68;
+      border: none;
+      padding: 0.8rem 2rem;
+      color: #fff;
+      font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s ease, color 0.3s ease;
+      border-radius: 30px;
     }
 
-    button[type="submit"]:hover {
-      background: #6B4226;
-      color: #fff;
-    }
-    /* --- End CONTACT FORM --- */
-
-    /* // === FOOTER === */
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: #000;
-      color: #fff;
-      font-size: 0.9rem;
-    }
-    /* --- End FOOTER --- */
-
-    /* // === MOBILE RESPONSIVE === */
+    /* Responsive Design */
     @media (max-width: 768px) {
       .split-section {
         flex-direction: column;
+        height: auto;
       }
-      .hero-content h1 {
-        font-size: 2rem;
+
+      .split-video,
+      .split-text {
+        width: 100%;
+        height: 50vh;
       }
     }
-    /* --- End MOBILE RESPONSIVE --- */
   </style>
 </head>
-
 <body>
 
-  <!-- // === FLOATING HAMBURGER MENU === -->
-  <div class="top-left-float">
-    <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-  </div>
-  
-  <!-- // === FLOATING BUSINESS NAME === -->
-  <div class="top-right-float">
-    <span class="business-name">zentiles</span>
-  </div>
+  <!-- === Header === -->
+  <header>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div class="brand-name">zentiles</div>
+    <a href="mailto:contact@zentiles.com" class="email-icon">
+      <i class="fa-solid fa-envelope"></i>
+    </a>
+  </header>
 
-  <!-- // === SIDE MENU === -->
-  <nav class="nav-menu" id="navMenu">
-    <a href="photo-editor.html">Create Art</a>
+  <!-- === Hamburger Menu === -->
+  <nav id="menu" class="menu">
+    <a href="#hero">Home</a>
+    <a href="#create-art">Create Art</a>
     <a href="#faq">FAQs</a>
-    <a href="#contact">Contact Us</a>
-    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
   </nav>
 
-  <!-- // === HERO SECTION === -->
-  <section class="hero">
-    <video src="assets/video/hero-bg.mp4" autoplay muted loop playsinline preload="auto"></video>
+  <!-- === Hero Section === -->
+  <section id="hero" class="hero">
+    <video autoplay muted loop playsinline>
+      <source src="assets/video/demo-apply.mp4" type="video/mp4">
+    </video>
     <div class="hero-content">
-      <h1>create memories with zentiles</h1>
-      <p class="motto">your walls, your unique story</p>
-      <a href="photo-editor.html" class="cta-btn">create art</a>
+      <h1>Create Your Art</h1>
+      <p>Turn memories into beautiful tiles</p>
+      <button class="cta-btn" onclick="location.href='photo-editor.html'">Create Art</button>
     </div>
   </section>
-  <!-- --- End HERO SECTION --- -->
 
-  <!-- // === SPLIT SECTION 1 === -->
+  <!-- === Split Section 1 === -->
   <section class="split-section">
-    <video src="assets/video/demo-apply.mp4" autoplay muted loop playsinline></video>
-    <div class="text">stick, snap, and style with ease</div>
+    <div class="split-video">
+      <video autoplay muted loop playsinline>
+        <source src="assets/video/hero-bg.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="split-text">
+      <p>Effortless design for your walls.</p>
+    </div>
   </section>
-  <!-- --- End SPLIT SECTION 1 --- -->
 
-  <!-- // === SPLIT SECTION 2 === -->
-  <section class="split-section reverse-layout">
-    <video src="assets/video/demo-room.mp4" autoplay muted loop playsinline></video>
-    <div class="text">magnetic & sticky tiles, effortlessly chic</div>
+  <!-- === Split Section 2 === -->
+  <section class="split-section">
+    <div class="split-text">
+      <p>Magnetic. Sticky. Simple to display.</p>
+    </div>
+    <div class="split-video">
+      <video autoplay muted loop playsinline>
+        <source src="assets/video/demo-room.mp4" type="video/mp4">
+      </video>
+    </div>
   </section>
-  <!-- --- End SPLIT SECTION 2 --- -->
 
-  <!-- // === FAQ SECTION === -->
+  <!-- === FAQ Section === -->
   <section id="faq" class="faq-section">
     <h2>Frequently Asked Questions</h2>
     <div class="faq-item">
       <button class="faq-question">How big are the tiles?</button>
       <div class="faq-answer">
-        <p>Available sizes include:</p>
-        <ul>
-          <li>8" × 8" (21.35 × 21.35 cm)</li>
-          <li>12" × 12" (31.6 × 31.6 cm)</li>
-          <li>12" × 16" or 16" × 12" (31.6 × 41.75 cm)</li>
-          <li>20" × 20" (49.53 × 49.53 cm)</li>
-        </ul>
-        <p><strong>Note:</strong> Available only within the Philippines.</p>
-      </div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question">How long does shipping take?</button>
-      <div class="faq-answer">
-        <p>Orders are delivered within <strong>7-10 business days</strong> anywhere in the Philippines.</p>
-        <p><strong>Standard shipping:</strong> ₱0 for orders above ₱2,000.<br>
-          <strong>Express shipping:</strong> Calculated at checkout.</p>
-      </div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question">Can the tiles be reused?</button>
-      <div class="faq-answer">
-        <p>Yes! Our tiles are reusable and leave no damage on walls. Stick, snap, and reposition as needed.</p>
+        <p>Available sizes include 8x8", 12x12", and 16x20". Perfect for any wall space.</p>
       </div>
     </div>
     <div class="faq-item">
       <button class="faq-question">Do you ship internationally?</button>
       <div class="faq-answer">
-        <p>Currently, Zentiles ships <strong>only within the Philippines</strong>.</p>
-      </div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question">What if I'm unhappy with my order?</button>
-      <div class="faq-answer">
-        <p>If you’re unhappy with your order, contact us and we’ll replace any damaged or defective tiles at no cost.</p>
+        <p>Currently, Zentiles ships only within the Philippines.</p>
       </div>
     </div>
   </section>
-  <!-- --- End FAQ SECTION --- -->
 
-  <!-- // === SOCIAL MEDIA SECTION === -->
-  <section class="social-section">
-    <h2>Follow Us @zentilesph</h2>
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-tiktok"></i></a>
-      <a href="#"><i class="fab fa-x-twitter"></i></a>
-    </div>
-  </section>
-  <!-- --- End SOCIAL MEDIA SECTION --- -->
-
-  <!-- // === CONTACT FORM === -->
-  <section id="contact" class="container">
+  <!-- === Contact Section === -->
+  <section id="contact" class="contact-section">
     <h2>Contact Us</h2>
-    <form action="https://formspree.io/f/meolvqab" method="POST">
-      <label for="name">Full Name</label>
-      <input id="name" name="name" type="text" placeholder="Your full name" required />
-      <label for="email">Email Address</label>
-      <input id="email" name="_replyto" type="email" placeholder="your.email@example.com" required />
-      <label for="message">Message</label>
-      <textarea id="message" name="message" placeholder="How can we help you?" rows="4"></textarea>
-      <button type="submit">Send Message</button>
+    <form action="https://formspree.io/f/your-form-id" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+      <button type="submit">Send</button>
     </form>
   </section>
-  <!-- --- End CONTACT FORM --- -->
 
-  <!-- // === FOOTER === -->
-  <footer>
-    <p>© 2025 Zentiles. All rights reserved.</p>
-  </footer>
-  <!-- --- End FOOTER --- -->
-
-  <!-- // === SCRIPTS === -->
   <script>
-    // === Hamburger Menu Toggle ===
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('navMenu');
-
-    hamburger.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-    });
-
-    // Close hamburger when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
-        navMenu.classList.remove('active');
+    // === Toggle Hamburger Menu ===
+    const menu = document.getElementById('menu');
+    function toggleMenu() {
+      menu.classList.toggle('open');
+    }
+    window.addEventListener('click', (e) => {
+      if (!menu.contains(e.target) && !e.target.classList.contains('hamburger')) {
+        menu.classList.remove('open');
       }
     });
 
-    // === FAQ Toggle Functionality ===
+    // === FAQ Toggle ===
     const faqQuestions = document.querySelectorAll('.faq-question');
-    faqQuestions.forEach(question => {
-      question.addEventListener('click', () => {
-        const answer = question.nextElementSibling;
-        faqQuestions.forEach(q => {
-          if (q !== question) {
-            q.classList.remove('active');
-            q.nextElementSibling.style.maxHeight = null;
+    faqQuestions.forEach(q => {
+      q.addEventListener('click', () => {
+        faqQuestions.forEach(item => {
+          if (item !== q) {
+            item.classList.remove('active');
+            item.nextElementSibling.style.maxHeight = null;
           }
         });
-        question.classList.toggle('active');
-        if (answer.style.maxHeight) {
-          answer.style.maxHeight = null;
-        } else {
-          answer.style.maxHeight = answer.scrollHeight + 'px';
-        }
+        q.classList.toggle('active');
+        const answer = q.nextElementSibling;
+        answer.style.maxHeight = answer.style.maxHeight ? null : answer.scrollHeight + "px";
       });
-    });
-
-    // === Contact Form Submission Redirect ===
-    const form = document.querySelector('form');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-      if (response.ok) {
-        form.reset();
-        // NOTE: 'thankyou.html' page is required for this redirect to work.
-        // As a temporary solution, you can use a message box to confirm submission.
-        alert('Thank you for your message! We will get back to you shortly.');
-      } else {
-        alert('Oops! There was a problem submitting your form.');
-      }
     });
   </script>
-  <!-- --- End SCRIPTS --- -->
-
 </body>
 </html>
