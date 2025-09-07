@@ -6,13 +6,11 @@
   <title>Zentiles Photo Editor</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
   <style>
     :root {
       --oak: #ce9f6f;
       --black: #000;
       --white: #fff;
-      --grey: #888;
       --bg: #fdf9f3;
     }
 
@@ -24,11 +22,10 @@
       overflow-x: hidden;
     }
 
-    /* === Header === */
     header {
       background: var(--white);
       padding: 1rem 2rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       text-align: center;
       font-size: 1.5rem;
       font-weight: 600;
@@ -36,13 +33,14 @@
       text-transform: lowercase;
     }
 
-    /* === Main Gallery Area === */
+    /* === Main Gallery === */
     .gallery-container {
       display: flex;
-      overflow-x: auto;
+      justify-content: center;
+      align-items: flex-start;
       padding: 2rem;
-      gap: 2rem;
-      scroll-behavior: smooth;
+      gap: 1rem;
+      transition: transform 0.3s ease;
     }
 
     .photo-item {
@@ -51,11 +49,9 @@
       border-radius: 10px;
       padding: 1rem;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      position: relative;
-      min-width: 250px;
-      max-width: 300px;
       text-align: center;
       cursor: grab;
+      transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
     }
 
     .photo-item.dragging {
@@ -63,27 +59,29 @@
       cursor: grabbing;
     }
 
-    /* Image Preview with Frame */
+    /* Photo Frame Preview */
     .photo-frame {
-      background: white;
-      border: 20px solid var(--black);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 1rem;
-      transition: border-color 0.3s ease, border-width 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      padding: 0;
+      margin: 0 auto 1rem;
+      border: 8px solid var(--white);
+      transition: border-width 0.3s ease, width 0.3s ease, height 0.3s ease;
     }
 
     .photo-frame img {
-      max-width: 100%;
       display: block;
+      width: 100%;
+      height: auto;
     }
 
-    /* === Controls Section === */
+    /* Controls Section */
     .photo-controls {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+      font-size: 0.9rem;
     }
 
     .photo-controls label {
@@ -99,39 +97,35 @@
       padding: 0.4rem;
       border: 1px solid var(--oak);
       border-radius: 6px;
-      font-size: 0.9rem;
     }
 
-    /* Frame Color Options */
-    .frame-options {
+    /* Frame Selector with Images */
+    .frame-gallery {
       display: flex;
-      gap: 0.5rem;
       justify-content: center;
+      gap: 0.5rem;
     }
 
-    .frame-swatch {
-      width: 30px;
-      height: 30px;
-      border-radius: 4px;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+    .frame-thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: transform 0.2s ease, outline 0.2s ease;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid transparent;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
-    .frame-swatch.black { background: var(--black); }
-    .frame-swatch.white { background: var(--white); border: 1px solid #ccc; }
-    .frame-swatch.grey { background: var(--grey); }
-
-    .frame-swatch:hover {
+    .frame-thumb:hover {
       transform: scale(1.1);
     }
 
-    .frame-swatch.selected {
-      outline: 3px solid var(--oak);
-      outline-offset: 2px;
+    .frame-thumb.selected {
+      border-color: var(--oak);
     }
 
-    /* === "+" Upload Button === */
+    /* "+" Upload Button */
     .add-photo-btn {
       position: fixed;
       bottom: 2rem;
@@ -148,11 +142,12 @@
       justify-content: center;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, opacity 0.3s ease;
     }
 
-    .add-photo-btn:hover {
-      background: var(--black);
+    .add-photo-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
     }
 
     input[type="file"] {
@@ -161,13 +156,9 @@
   </style>
 </head>
 <body>
-  <header>
-    create your gallery wall
-  </header>
+  <header>create your gallery wall</header>
 
-  <main class="gallery-container" id="gallery">
-    <!-- Uploaded photos will appear here -->
-  </main>
+  <main class="gallery-container" id="gallery"></main>
 
   <!-- "+" Button -->
   <button class="add-photo-btn" id="addPhotoBtn">
@@ -180,13 +171,38 @@
     const addPhotoBtn = document.getElementById('addPhotoBtn');
     const photoUpload = document.getElementById('photoUpload');
 
-    // Trigger upload when "+" button is clicked
-    addPhotoBtn.addEventListener('click', () => photoUpload.click());
+    const MAX_PHOTOS = 7;
+
+    const SIZE_MAP = {
+      "8x8": { width: 150, height: 150 },
+      "8x11": { width: 150, height: 210 },
+      "12x12": { width: 200, height: 200 },
+      "12x16": { width: 200, height: 270 },
+      "20x20": { width: 300, height: 300 },
+      "20x27": { width: 300, height: 400 }
+    };
+
+    const FRAME_OPTIONS = [
+      { name: 'Black', image: 'assets/frames/black-frame.png' },
+      { name: 'White', image: 'assets/frames/white-frame.png' },
+      { name: 'Oak', image: 'assets/frames/oak-frame.png' }
+    ];
+
+    addPhotoBtn.addEventListener('click', () => {
+      if (gallery.children.length < MAX_PHOTOS) {
+        photoUpload.click();
+      }
+    });
 
     // When a photo is uploaded
     photoUpload.addEventListener('change', (event) => {
       const file = event.target.files[0];
       if (!file) return;
+
+      if (gallery.children.length >= MAX_PHOTOS) {
+        addPhotoBtn.classList.add('disabled');
+        return;
+      }
 
       const reader = new FileReader();
       reader.onload = function(e) {
@@ -194,128 +210,87 @@
         photoItem.classList.add('photo-item');
         photoItem.setAttribute('draggable', 'true');
 
+        const defaultSize = SIZE_MAP["12x12"];
+
         photoItem.innerHTML = `
-          <div class="photo-frame">
+          <div class="photo-frame" style="width:${defaultSize.width}px; height:${defaultSize.height}px;">
             <img src="${e.target.result}" alt="Uploaded Photo">
           </div>
           <div class="photo-controls">
             <div>
               <label>Frame</label>
-              <div class="frame-options">
-                <div class="frame-swatch black" data-color="#000000"></div>
-                <div class="frame-swatch white" data-color="#ffffff"></div>
-                <div class="frame-swatch grey" data-color="#888888"></div>
+              <div class="frame-gallery">
+                ${FRAME_OPTIONS.map(frame => `
+                  <div class="frame-thumb" style="background-image: url('${frame.image}')" data-frame="${frame.image}"></div>
+                `).join('')}
               </div>
             </div>
 
             <div>
               <label>Size</label>
-              <select>
+              <select class="size-selector">
                 <option value="8x8">8" × 8"</option>
                 <option value="8x11">8" × 11"</option>
-                <option value="12x12">12" × 12"</option>
+                <option value="12x12" selected>12" × 12"</option>
                 <option value="12x16">12" × 16"</option>
                 <option value="20x20">20" × 20"</option>
                 <option value="20x27">20" × 27"</option>
               </select>
             </div>
-
-            <div>
-              <label>Effect</label>
-              <select class="effect-selector">
-                <option value="none">None</option>
-                <option value="grayscale(100%)">Black & White</option>
-                <option value="sepia(100%)">Sepia</option>
-                <option value="contrast(120%) saturate(120%)">Vivid</option>
-                <option value="brightness(110%) hue-rotate(20deg)">Warm</option>
-              </select>
-            </div>
-
-            <div>
-              <label>Border</label>
-              <input type="range" min="0" max="50" value="10" class="border-slider">
-            </div>
           </div>
         `;
 
-        // Add to gallery
         gallery.appendChild(photoItem);
-
-        // Add functionality
         initializePhotoControls(photoItem);
-        enableDragAndDrop();
+
+        if (gallery.children.length >= MAX_PHOTOS) {
+          addPhotoBtn.classList.add('disabled');
+        }
+
+        adjustGalleryScaling();
       };
       reader.readAsDataURL(file);
     });
 
     function initializePhotoControls(photoItem) {
-      const frame = photoItem.querySelector('.photo-frame');
-      const swatches = photoItem.querySelectorAll('.frame-swatch');
-      const effectSelector = photoItem.querySelector('.effect-selector');
-      const borderSlider = photoItem.querySelector('.border-slider');
+      const frameDiv = photoItem.querySelector('.photo-frame');
+      const sizeSelector = photoItem.querySelector('.size-selector');
+      const frameThumbs = photoItem.querySelectorAll('.frame-thumb');
 
-      // Frame color change
-      swatches.forEach(swatch => {
-        swatch.addEventListener('click', () => {
-          swatches.forEach(s => s.classList.remove('selected'));
-          swatch.classList.add('selected');
-          frame.style.borderColor = swatch.getAttribute('data-color');
-        });
+      // Dynamic size change
+      sizeSelector.addEventListener('change', () => {
+        const selectedSize = SIZE_MAP[sizeSelector.value];
+        frameDiv.style.width = selectedSize.width + 'px';
+        frameDiv.style.height = selectedSize.height + 'px';
+        adjustGalleryScaling();
       });
 
-      // Effects
-      effectSelector.addEventListener('change', () => {
-        frame.querySelector('img').style.filter = effectSelector.value;
-      });
-
-      // Border thickness
-      borderSlider.addEventListener('input', () => {
-        frame.style.padding = borderSlider.value + 'px';
-      });
-    }
-
-    /* === Drag & Drop Reordering === */
-    let draggedItem = null;
-
-    function enableDragAndDrop() {
-      const photoItems = document.querySelectorAll('.photo-item');
-
-      photoItems.forEach(item => {
-        item.addEventListener('dragstart', () => {
-          draggedItem = item;
-          setTimeout(() => item.classList.add('dragging'), 0);
-        });
-
-        item.addEventListener('dragend', () => {
-          draggedItem = null;
-          item.classList.remove('dragging');
-        });
-
-        gallery.addEventListener('dragover', (e) => {
-          e.preventDefault();
-          const afterElement = getDragAfterElement(gallery, e.clientX);
-          if (afterElement == null) {
-            gallery.appendChild(draggedItem);
-          } else {
-            gallery.insertBefore(draggedItem, afterElement);
-          }
+      // Frame selection
+      frameThumbs.forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          frameThumbs.forEach(t => t.classList.remove('selected'));
+          thumb.classList.add('selected');
+          frameDiv.style.backgroundImage = `url('${thumb.dataset.frame}')`;
         });
       });
     }
 
-    function getDragAfterElement(container, x) {
-      const draggableElements = [...container.querySelectorAll('.photo-item:not(.dragging)')];
+    // Automatically fit all photos in viewport
+    function adjustGalleryScaling() {
+      const galleryWidth = window.innerWidth - 100;
+      let totalWidth = 0;
 
-      return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = x - box.left - box.width / 2;
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child };
-        } else {
-          return closest;
-        }
-      }, { offset: Number.NEGATIVE_INFINITY }).element;
+      const items = gallery.querySelectorAll('.photo-frame');
+      items.forEach(item => {
+        totalWidth += item.offsetWidth + 40; // includes padding
+      });
+
+      const scale = totalWidth > galleryWidth ? galleryWidth / totalWidth : 1;
+      gallery.style.transform = `scale(${scale})`;
+      gallery.style.transformOrigin = 'top center';
     }
+
+    window.addEventListener('resize', adjustGalleryScaling);
   </script>
 </body>
 </html>
